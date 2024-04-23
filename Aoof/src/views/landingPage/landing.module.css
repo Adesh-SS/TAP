@@ -1,0 +1,56 @@
+@import '../../assets/base.css';
+
+.login_container {
+    width: 35vw;
+    height: 80vh;
+    background: var(--secondary);
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_logo_container {
+    width: 30vw;
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+}
+
+.login_text_container {
+    width: 30vw;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+}
+
+.login_text_container h1 {
+    color: var(--text);
+    font-size: 1.2em;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: .2em;
+}
+
+.login_button_container {
+    width: 30vw;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    border-radius: .5em;
+}
+
+.login_button_container button {
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: .5em;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: .2em;
+    cursor: pointer;
+}
