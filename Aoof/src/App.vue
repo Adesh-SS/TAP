@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import landingPagee from './views/landingPage/landingPagee.vue';
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <RouterView /> 
+  <RouterView />
 </template>
