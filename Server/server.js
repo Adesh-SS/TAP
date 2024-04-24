@@ -1,18 +1,19 @@
-const cookieSession = require('cookie-session');
 const express = require('express');
-const passport = require('passport');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
+const passport = require('passport');
+const session = require('express-session');
 
 const passportSetup = require('./googleAuth/auth');
 const authRoutes = require('./routes/route');
 
 const app = express();
 
-app.use(cookieSession({
-    name: 'session',
-    keys: ['shit'],
-    maxAge: 24*60*60*100
+app.use(session({
+    secret: 'dickhead',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Note: secure should be set to true if your application is running over HTTPS
 }));
 
 app.use(passport.initialize());
