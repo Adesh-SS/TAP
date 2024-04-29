@@ -3,3 +3,12 @@
 --primary: #2f27ce;
 --secondary: #dedcff;
 --accent: #433bff;
+
+
+Dark Theme:
+
+--text: #e8eafd;
+--background: #060819;
+--primary: #8394f2;
+--secondary: #262d74;
+--accent: #616ccf;

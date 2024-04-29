@@ -7,7 +7,7 @@ import bitLogo from '../../components/icons/BIT.webp'
 //Functions
 
 const googleLogin = () => {
-  window.open('http://localhost:5000/auth/google', '_self');
+  window.open('http://localhost:5000/auth/google', '_self')
 }
 </script>
 
