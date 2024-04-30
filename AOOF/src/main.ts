@@ -21,6 +21,7 @@ import Chart from 'primevue/chart';
 //Internal Components
 
 import AddUsers from './components/userDetails/addUsers.vue';
+import GenReport from './components/userReport/genReport.vue';
 
 const app = createApp(App)
 
@@ -31,5 +32,6 @@ app.use(PrimeVue, { ripple: true  });
 app.component('AutoComplete', AutoComplete);
 app.component('Chart', Chart);
 app.component('add-users', AddUsers);
+app.component('gen-report', GenReport);
 
 app.mount('#app')

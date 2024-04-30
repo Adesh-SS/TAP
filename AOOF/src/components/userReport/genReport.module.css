@@ -1,0 +1,60 @@
+@import url('../../assets/base.css');
+
+.genReport_container {
+    height: 78vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.genReport_academicYear_container {
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4vh 0 4vh 0;
+    background: var(--secondary);
+    border-radius: 1em;
+}
+
+.genReport_academicYear_rectangles {
+    height: 100%;
+    width: 25vw;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.genReport_academicYear_rectangles h1 {
+    font-size: 1.5em;
+    color: var(--text);
+    font-weight: 500;
+    letter-spacing: .1em;
+}
+
+.genReport_academicYear_rectangles p {
+    font-size: 1.5em;
+    color: var(--text);
+    font-weight: 500;
+    letter-spacing: .1em;
+}
+
+.genReport_academicYear_rectangles button {
+    height: 8vh;
+    width: 18vw;
+    background: var(--primary);
+    border: none;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: var(--background);
+    letter-spacing: .1em;
+}
