@@ -1,0 +1,177 @@
+@import url('../../assets/base.css');
+
+.addUsers_container {
+    height: 80vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addUser_tab_container {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+}
+
+.addUser_tab_rectangle {
+    height: 100%;
+    width: 15vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2vw 0 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.addUser_tab_rectangle h1 {
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: .1em;
+}
+
+.addUser_tab_rectangle_focus {
+    height: 100%;
+    width: 15vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary);
+    margin: 0 2vw 0 0;
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.addUser_tab_rectangle_focus h1 {
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: .1em;
+}
+
+.addUser_details_container {
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--secondary);
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.addUser_students_year_container {
+    height: 10vh;
+    width: 85vw;
+    background: var(--background);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6vh 0 0 0;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.addUser_students_year_rectangle {
+    height: 100%;
+    width: 25vw;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+}
+
+.addUser_students_year_rectangle h1 {
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: .1em;
+}
+
+.addUser_students_year_rectangle p{
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: .1em;
+}
+
+.addUser_mentor_add_container {
+    width: 90vw;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end; 
+    margin: 1vh 0 0 0; 
+}
+
+.addUser_mentor_add_container button {
+    height: 100%;
+    width: 15vw;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: .5em;
+    font-size: 1.5em;
+    font-weight: 500;
+    letter-spacing: .1em;
+    cursor: pointer;
+    margin: 0 1vw 0 0;
+}
+
+.addUser_mentor_details_container {
+    width: 90vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    margin: 1vh 0 0 0;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+
+.addUser_incharge_add_container {
+    width: 90vw;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end; 
+    margin: 1vh 0 0 0; 
+}
+
+.addUser_incharge_add_container button {
+    height: 100%;
+    width: 15vw;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: .5em;
+    font-size: 1.5em;
+    font-weight: 500;
+    letter-spacing: .1em;
+    cursor: pointer;
+    margin: 0 1vw 0 0;
+}
+
+.addUser_incharge_details_container {
+    width: 90vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    margin: 1vh 0 0 0;
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+}

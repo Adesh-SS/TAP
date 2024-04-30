@@ -1,18 +1,26 @@
+//Styles
+
 import './assets/main.css'
+import "primeflex/primeflex.css";
+import "primevue/resources/themes/aura-light-green/theme.css";
+import "primeicons/primeicons.css";
+
+//App dependencies
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+
+//External Components
 
 import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Chart from 'primevue/chart';
 
-import App from './App.vue'
-import router from './router'
+//Internal Components
 
-import "primeflex/primeflex.css";
-import "primevue/resources/themes/aura-light-green/theme.css";
-import "primeicons/primeicons.css";
+import AddUsers from './components/userDetails/addUsers.vue';
 
 const app = createApp(App)
 
@@ -22,5 +30,6 @@ app.use(PrimeVue, { ripple: true  });
 
 app.component('AutoComplete', AutoComplete);
 app.component('Chart', Chart);
+app.component('add-users', AddUsers);
 
 app.mount('#app')

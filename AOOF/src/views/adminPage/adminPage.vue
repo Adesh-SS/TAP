@@ -17,7 +17,7 @@ import styles from './adminPage.module.css';
 
 const value = ref<string>("");
 const items = ref<string[]>([]);
-const sideBarSelected = ref<string>('home');
+const sideBarSelected = ref<string>('addressBook');
 
 const search = (event : {query: string}) => {
     items.value = [...Array(10).keys()].map((item) => event.query + '-' + item);
@@ -168,6 +168,9 @@ export default {
             <!-- Page Content -->
 
             <div :class="styles.adminPage_content_container">
+
+                <!-- Home Page -->
+
                 <div v-if="sideBarSelected === 'home'">
                   <div :class="styles.adminPage_chart_container">
                     <Chart type="doughnut" :data="chartData" :options="chartOptions" class="w-full md:w-30rem" />
@@ -192,6 +195,12 @@ export default {
                     <hr />
                     <h2>{{ finalYearCount }}</h2>
                   </div>
+                </div>
+
+                <!-- User Details Page -->
+
+                <div v-else-if="sideBarSelected === 'addressBook'">
+                    <add-users />
                 </div>
             </div>
         </div>
