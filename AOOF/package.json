@@ -17,10 +17,13 @@
   "dependencies": {
     "chart.js": "^4.4.2",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "flowbite": "^2.3.0",
+    "flowbite-vue": "^0.1.4",
     "pinia": "^2.1.7",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
+    "sweetalert2": "^11.10.8",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue-search-input": "^1.1.14"

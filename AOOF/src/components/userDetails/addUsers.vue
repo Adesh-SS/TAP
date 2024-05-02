@@ -2,6 +2,7 @@
 // dependencies
 
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // styles
 
@@ -17,9 +18,16 @@ const selectedTab = ref<string>('students');
 
 export default {
     setup(){
+        const router = useRouter();
+
+        const navigateToYear = (year: string) => {
+            router.push(`/admin/${year}`);
+        };
+
         return {
             styles,
             selectedTab,
+            navigateToYear,
         };
     }
 }
@@ -70,6 +78,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
+                    <i class="pi pi-eye" @click="navigateToYear('firstYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -83,6 +92,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
+                    <i class="pi pi-eye" @click="navigateToYear('secondYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -96,6 +106,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
+                    <i class="pi pi-eye" @click="navigateToYear('thirdYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -109,6 +120,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
+                    <i class="pi pi-eye" @click="navigateToYear('finalYear')"></i>
                 </div>
             </div>
 
