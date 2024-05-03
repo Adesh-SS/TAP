@@ -1,0 +1,138 @@
+
+            <!--Sample Content-->
+
+            <div :class="styles.addStudent_department_container">
+                <div :class="styles.addStudent_department_end_rectangles">
+                    <h1>00</h1>
+                </div>
+                <div :class="styles.addStudent_department_rectangles">
+                    <h1>Department Name Goes Here</h1>
+                </div>
+                <div :class="styles.addStudent_department_rectangles">
+                    <h1>Students:</h1>
+                    <p>00</p>
+                </div>
+                <div :class="styles.addStudent_department_end_rectangles">
+                    <i class="pi pi-plus-circle"  @click="visibleAddStudents = true"/>
+
+                    <!-- Student Modal -->
+
+                    <Dialog v-model:visible="visibleAddStudents" modal header="Add Students" :class="styles.addStudents_modal">
+                        <div :class="styles.addStudents_modalContent">
+
+                            <!-- Tabs -->
+
+                            <div :class="styles.addStudents_modalContent_tabs_container">
+                                <div 
+                                    :class="addMethod === 'mail' ? styles.addStudents_modalContent_tabs_rectangles_focus : styles.addStudents_modalContent_tabs_rectangles"
+                                    @click="addMethod = 'mail'"
+                                >
+                                    <h1>By Mail</h1>
+                                </div>
+                                
+                                <div :class="addMethod === 'csv' ? styles.addStudents_modalContent_tabs_rectangles_focus : styles.addStudents_modalContent_tabs_rectangles"
+                                    @click="addMethod = 'csv'"
+                                >
+                                    <h1>By CSV</h1>
+                                </div>
+                            </div>
+
+                            <!-- By Mail -->
+
+                            <div v-if="addMethod === 'mail'" :class="styles.addStudents_modalContent_byMail_container">
+
+                                <!-- Inputs container -->
+
+                                <div :class="styles.addStudents_modalContent_byMail_input_container">
+                                    <div :class="styles.input_container">
+                                        <input type="text" v-model="studentDetails.user_name" @keydown.enter.prevent="addStudents" required>
+                                        <label for="input" :class="styles.label">Student Name</label>
+                                        <div :class="styles.underline"></div>
+                                    </div>
+                                    <div :class="styles.input_container">
+                                        <input type="text" v-model="studentDetails.roll_no" @keydown.enter.prevent="addStudents" required>
+                                        <label for="input" :class="styles.label">Student Roll Number</label>
+                                        <div :class="styles.underline"></div>
+                                    </div>
+                                    <div :class="styles.input_container">
+                                        <input type="text" v-model="studentDetails.email" @keydown.enter.prevent="addStudents" required>
+                                        <label for="input" :class="styles.label">Student Mail ID</label>
+                                        <div :class="styles.underline"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Details display container -->
+
+                                <div :class="styles.addStudents_modalContent_byMail_display_container">
+                                    <div v-for="(student, index) in students" 
+                                        :key="index" 
+                                        :class="styles.addStudents_modalContent_byMail_display"
+                                        @click="deleteStudent(index)"
+                                    >
+                                        <h1>{{ `${student.user_name}(${student.roll_no})(${student.email})` }}</h1>
+                                    </div>
+                                </div>
+
+                                <div :class="styles.addStudents_modalContent_buttons_container">
+                                    <button @click="handleSave">
+                                        <i class="pi pi-save" />
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- By CSV -->
+
+                            <div v-else :class="styles.addStudents_modalContent_byCSV_container">
+                                <div :class="styles.addStudents_downloadTemplate_container">
+                                    <button @click="downloadCSVTemplate">
+                                        <i class="pi pi-download" />
+                                        Download
+                                    </button>
+                                </div>
+                                <div :class="styles.addStudents_modalContent_fileUpload_container">
+                                    <div 
+                                        :class="styles.addStudents_modalContent_fileUpload_dragDrop"
+                                        @dragover.prevent
+                                         @drop="onDrop"
+                                    >
+                                        <i class="pi pi-file-arrow-up" />
+                                        <h1 v-if="fileName === ''">Drag and Drop CSV file here</h1>
+                                        <h1 v-else>{{ fileName }}</h1>
+                                    </div>
+                                    <div :class="styles.addStudents_modalContent_fileUpload_upload">
+                                        <input type="file" ref="fileInput" v-on:change="handleCSVUpload" accept=".csv" />
+                                        <button v-on:click="triggerFileUpload">
+                                            <i class="pi pi-upload" />
+                                            Upload CSV
+                                        </button>    
+                                    </div>
+                                </div>
+                                <div :class="styles.addStudents_modalContent_buttons_container">
+                                    <button @click="logJson">
+                                        <i class="pi pi-save" />
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </Dialog>
+
+                    <i class="pi pi-eye" @click="visibleDisplayStudents = true" />
+
+                    <!-- Students List Modal -->
+
+                    <Dialog v-model:visible="visibleDisplayStudents" modal header="Students List" :class="styles.addStudents_modal">
+                        <div :class="styles.addStudents_modalContent">
+                            <div v-for="(student, index) in json" :key="index" :class="styles.addStudents_display">
+                                <h1>{{ `${student.user_name}` }}</h1>
+                                <h1>{{ `${student.roll_no}` }}</h1>
+                                <h1>{{ `${student.email}` }}</h1>
+                            </div>
+                        </div>
+                    </Dialog>
+
+
+                    <i class="pi pi-trash" @click="confirmDelete" />
+                </div>
+            </div>

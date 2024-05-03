@@ -18,8 +18,6 @@ import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Chart from 'primevue/chart';
 import Dialog from 'primevue/dialog';
-import FileUpload from 'primevue/fileupload';
-import Toast from 'primevue/toast';
 
 //Internal Components
 
@@ -37,7 +35,5 @@ app.component('Chart', Chart);
 app.component('add-users', AddUsers);
 app.component('gen-report', GenReport);
 app.component('Dialog', Dialog);
-app.component('FileUpload', FileUpload);
-app.component('Toast', Toast);
 
 app.mount('#app')
