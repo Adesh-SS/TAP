@@ -2,6 +2,7 @@
 // dependencies
 
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 // styles
 
@@ -17,10 +18,16 @@ const selectedTab = ref<string>('students');
 
 export default {
     setup(){
+        const router = useRouter();
 
+        const navigateTo = (path: string) => {
+            router.push(`admin/${path}`);
+        };
+        
         return {
             styles,
             selectedTab,
+            navigateTo
         };
     }
 }
@@ -71,7 +78,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
-                    <i class="pi pi-eye"></i>
+                    <i class="pi pi-eye" @click="navigateTo('firstYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -85,7 +92,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
-                    <i class="pi pi-eye"></i>
+                    <i class="pi pi-eye" @click="navigateTo('secondYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -99,7 +106,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
-                    <i class="pi pi-eye"></i>
+                    <i class="pi pi-eye" @click="navigateTo('thirdYear')"></i>
                 </div>
                 <div :class="styles.addUser_students_year_container">
                     <div :class="styles.addUser_students_year_rectangle">
@@ -113,7 +120,7 @@ export default {
                         <h1>Students:</h1>
                         <p>00</p>
                     </div>
-                    <i class="pi pi-eye"></i>
+                    <i class="pi pi-eye" @click="navigateTo('finalYear')"></i>
                 </div>
             </div>
 

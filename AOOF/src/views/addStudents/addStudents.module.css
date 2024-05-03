@@ -1,0 +1,353 @@
+@import url('../../assets/base.css');
+
+.addStudents_container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: var(--background);
+}
+
+.addStudents_header {
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.addStudents_header_left {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.addStudents_header_left button {
+    width: 3vw;
+    height: 5vh;
+    margin: 1vh 0 0 1vw;
+    background: var(--accent);
+    color: var(--background);
+    border: none;
+    border-radius: 5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_header_left i {
+    font-size: 2em;
+}
+
+.addStudents_header_right {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.addStudents_header_right button {
+    width: 15vw;
+    height: 8vh;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1vw 0 0;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+}
+
+.addStudents_header_right i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+.addStudents_main {
+    width: 100%;
+    height: 76vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.addStudents_department_display_container {
+    width: 80vw;
+    height: 10vh;
+    background: var(--secondary);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 10vh;
+    border-radius: 1em;
+    margin: 1vh 0 1vh 0;
+}
+
+.addStudents_department_display_first_sections {
+    width: 5vw;
+    height: 100%;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_department_display_first_sections h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addStudents_department_display_sections {
+    width: 30vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_department_display_sections h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addStudents_department_display_end_sections {
+    width: 12vw;
+    height: 100%;
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_department_display_end_sections i {
+    font-size: 1.2em;
+    color: var(--accent);
+    cursor: pointer;
+}
+
+.addStudents_modalContent {
+    width: 66vw;
+    height: 66vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    flex-grow: 0;
+    flex-basis: 66vh;
+}
+
+.addStudents_modal_tabs_container {
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addStudents_modal_tabs {
+    width: 15vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    color: var(--text);
+    border-bottom: none;
+    transition: border-bottom .1s ease-in;
+}
+
+.addStudents_modal_tabs_focus {
+    width: 15vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    color: var(--text);
+    border-bottom: 1px solid var(--accent);
+    transition: border-bottom .1s ease-in;
+}
+
+.addStudents_byMail_container {
+    width: 66vw;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addStudents_byMail_input_container {
+    width: 66vw;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.input_container {
+    position: relative;
+    margin: 50px auto;
+    width: 20vw;
+}
+  
+.input_container input[type="text"] {
+    font-size: 1.2em;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--text);
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+}
+  
+.input_container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-size: 1em;
+}
+  
+.input_container input[type="text"]:focus ~ .label,
+.input_container input[type="text"]:valid ~ .label {
+    top: -10px;
+    font-size: .8em;
+    color: var(--text);
+}
+  
+.input_container .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+}
+  
+.input_container input[type="text"]:focus ~ .underline,
+.input_container input[type="text"]:valid ~ .underline {
+    transform: scaleX(1);
+}
+
+.addStudents_byMail_preview_container {
+    width: 66vw;
+    height: 42vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.addStudents_byMail_preview {
+    width: auto;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1vh 1vw 1vh 1vw;
+    padding: .5vh .5vw .5vh .5vw;
+    border-radius: 1em;
+    background: var(--secondary);
+    cursor: pointer;
+}
+
+.addStudents_byMail_preview h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+  
+.addStudents_modal_button_container {
+    width: 66vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_modal_button_container button {
+    width: 10vw;
+    height: 8vh;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1vw 0 0;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+}
+
+.addStudents_modal_button_container i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+.addStudents_footer {
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_footer button {
+    width: 10vw;
+    height: 8vh;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1vw 0 0;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+}
+
+.addStudents_footer i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
