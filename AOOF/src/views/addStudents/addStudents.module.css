@@ -421,6 +421,64 @@
     margin: 0 1vw 0 0;
 }
 
+.addStudents_viewModal_display_container {
+    width: 100%;
+    height: 6vh;
+    border-radius: .5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--secondary);
+    margin: 1vh 0 1vh 0;
+}
+
+.addStudents_viewModal_display_first_sections {
+    width: 5vw;
+    height: 100%;
+    border-radius: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_viewModal_display_first_sections h1 {
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addStudents_viewModal_display_sections {
+    width: 30vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_viewModal_display_sections h1 {
+    font-size: 1em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addStudents_viewModal_display_end_sections {
+    width: 12vw;
+    height: 100%;
+    border-radius: .5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addStudents_viewModal_display_end_sections i {
+    font-size: 1em;
+    color: var(--accent);
+    cursor: pointer;
+}
+
 .addStudents_footer {
     width: 100%;
     height: 12vh;

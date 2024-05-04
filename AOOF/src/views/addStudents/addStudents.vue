@@ -31,6 +31,7 @@ interface Student {
 
 const departments = ref<Department[]>([]);
 const visibleAddStudentModal = ref<boolean[]>([]);
+const visibleViewStudentModal = ref<boolean[]>([]);
 const addStudentsMethod = ref<string>('mail');
 const students = ref<Student[]>([]);
 const newStudent = ref<Student>({
@@ -67,6 +68,7 @@ const addDepartment = () => {
           };
           departments.value.push(newDepartment);
           visibleAddStudentModal.value.push(true);
+          visibleViewStudentModal.value.push(false);
         } else {
           Swal.fire({
             title: 'Department Exists',
@@ -81,6 +83,10 @@ const addDepartment = () => {
 
 const handleModalToggle = (index: number) => {
   visibleAddStudentModal.value[index] = !visibleAddStudentModal.value[index];
+};
+
+const handleViewModalToggle = (index: number) => {
+  visibleViewStudentModal.value[index] = !visibleViewStudentModal.value[index];
 };
 
 const addStudents = () => {
@@ -198,6 +204,30 @@ const downloadTemplate = () => {
   document.body.removeChild(link);
 }
 
+const deleteStudentFromDepartment = (departmentIndex: number, studentIndex: number) => {
+  const confirm = window.confirm('Are you sure you want to delete this student?');
+  if (confirm) {
+    departments.value[departmentIndex].students.splice(studentIndex, 1);
+  }
+}
+
+const deleteDepartment = (index: number) => {
+  Swal.fire({
+    title: 'Delete Department',
+    text: 'This action cannot be reversed!',
+    icon: 'error',
+    showCancelButton: true,
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      departments.value.splice(index, 1);
+      visibleAddStudentModal.value.splice(index, 1);
+      visibleViewStudentModal.value.splice(index, 1);
+    }
+  });
+}
+
 //export
 
 export default {
@@ -220,7 +250,9 @@ export default {
       departments,
       addDepartment,
       visibleAddStudentModal,
+      visibleViewStudentModal,
       handleModalToggle,
+      handleViewModalToggle,
       addStudentsMethod,
       students,
       newStudent,
@@ -233,6 +265,8 @@ export default {
       fileCheck,
       downloadTemplate,
       saveDepartment,
+      deleteStudentFromDepartment,
+      deleteDepartment,
     };
   }
 }
@@ -421,9 +455,44 @@ export default {
 
               </Dialog>
 
-              <i class="pi pi-eye" />
+              <i class="pi pi-eye" @click="handleViewModalToggle(index)" />
 
               <!-- View Students Modal -->
+
+              <Dialog
+                :visible="visibleViewStudentModal[index]"
+                @update:visible="handleViewModalToggle(index)"
+                :modal="true"
+                header="View Students"
+                :style="{ width: '70vw', height: '80vh'}"
+              >
+                <div :class="styles.addStudents_modalContent">
+                  <div 
+                    :class="styles.addStudents_viewModal_display_container"
+                    v-for="(student, studentIndex) in department.students"
+                  >
+                    <div :class="styles.addStudents_viewModal_display_first_sections">
+                      <h1>{{ studentIndex + 1 }}</h1>
+                    </div>
+                    <div :class="styles.addStudents_viewModal_display_sections">
+                      <h1>{{ student.name }}</h1>
+                    </div>
+                    <div :class="styles.addStudents_viewModal_display_sections">
+                      <h1>{{ student.roll }}</h1>
+                    </div>
+                    <div :class="styles.addStudents_viewModal_display_sections">
+                      <h1>{{ student.email }}</h1>
+                    </div>
+                    <div :class="styles.addStudents_viewModal_display_end_sections">
+                      <i class="pi pi-trash" @click="deleteStudentFromDepartment(index, studentIndex)" />
+                    </div>
+                  </div>
+                </div>
+              </Dialog>
+
+              <!-- Delete department -->
+
+              <i class="pi pi-trash" @click="deleteDepartment(index)" />
 
             </div>
         </div>
