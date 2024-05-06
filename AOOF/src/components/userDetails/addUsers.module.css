@@ -116,7 +116,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: space-between; 
     margin: 1vh 0 0 0; 
 }
 
@@ -134,6 +134,14 @@
     margin: 0 1vw 0 0;
 }
 
+.addUser_mentor_add_container h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+    margin: 0 0 0 1vw;
+}
+
 .addUser_mentor_details_container {
     width: 90vw;
     height: 60vh;
@@ -144,6 +152,316 @@
     margin: 1vh 0 0 0;
     border-bottom-left-radius: 1em;
     border-bottom-right-radius: 1em;
+    overflow-y: auto;
+}
+
+.addUser_mentor_modalContent {
+    width: 76vw;
+    height: 78vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addUser_mentor_modal_tabs_container {
+    width: 100%;
+    height: 6vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addUser_mentor_modal_tabs {
+    width: 15vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    color: var(--text);
+    border-bottom: none;
+    transition: border-bottom .1s ease-in;
+}
+
+.addUser_mentor_modal_tabs_focus {
+    width: 15vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    color: var(--text);
+    border-bottom: 1px solid var(--accent);
+    transition: border-bottom .1s ease-in;
+}
+
+.addUser_mentor_byMail_container {
+    width: 76vw;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.addUser_mentor_byMail_input_container {
+    width: 76vw;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.input_container {
+    position: relative;
+    margin: 50px auto;
+    width: 20vw;
+}
+  
+.input_container input[type="text"] {
+    font-size: 1.2em;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--text);
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
+}
+  
+.input_container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #ccc;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    font-size: 1em;
+}
+  
+.input_container input[type="text"]:focus ~ .label,
+.input_container input[type="text"]:valid ~ .label {
+    top: -10px;
+    font-size: .8em;
+    color: var(--text);
+}
+  
+.input_container .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--accent);
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+}
+  
+.input_container input[type="text"]:focus ~ .underline,
+.input_container input[type="text"]:valid ~ .underline {
+    transform: scaleX(1);
+}
+
+.addUser_mentor_preview_container {
+    width: 76vw;
+    height: 48vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.addUser_mentor_preview {
+    width: auto;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1vh 1vw 1vh 1vw;
+    padding: .5vh .5vw .5vh .5vw;
+    border-radius: 1em;
+    background: var(--secondary);
+    cursor: pointer;
+}
+
+.addUser_mentor_preview h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addUser_modal_button_container {
+    width: 76vw;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addUser_modal_button_container button {
+    width: 10vw;
+    height: 8vh;
+    background: var(--primary);
+    color: var(--background);
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1vw 0 0;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+}
+
+.addUser_modal_button_container i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+.addUser_modal_byCSV_download_container {
+    width: 76vw;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.addUser_modal_byCSV_download_container button {
+    width: 20vw;
+    height: 6vh;
+    background: var(--secondary);
+    color: var(--text);
+    border: none;
+    border-radius: .5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1vw 0 0;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+}
+
+.addUser_modal_byCSV_download_container i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+.addUser_byCSV_container {
+    width: 76vw;
+    height: 55vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    height: 40vh;
+    width: 30vw;
+    border-radius: 1em;
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 5px;
+    background: var(--background);
+}
+  
+.header {
+    flex: 1;
+    width: 100%;
+    border: 2px dashed var(--accent);
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+  
+.header svg {
+    height: 10vh;
+}
+  
+.header p {
+    text-align: center;
+    color: var(--text);
+}
+  
+.footer {
+    background: var(--secondary);
+    width: 100%;
+    height: 5vh;
+    padding: 8px;
+    border-radius: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: black;
+    border: none;
+}
+  
+.footer svg {
+    height: 130%;
+    fill: royalblue;
+    background-color: rgba(70, 66, 66, 0.103);
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+  
+.footer p {
+    flex: 1;
+    text-align: center;
+}
+
+.addUser_mentors_display_container {
+    width: 100%;
+    height: 58vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 1em;
+    overflow-y: auto;
+}
+
+.addUser_mentors_display {
+    width: 90%;
+    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1vh 0 1vh 0;
+    padding: 1vh 1vw 1vh 1vw;
+    border-radius: .5em;
+    background: var(--background);
+}
+
+.addUser_mentors_display h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+}
+
+.addUser_mentors_display i {
+    font-size: 1em;
+    color: var(--accent);
+    cursor: pointer;
 }
 
 .addUser_incharge_add_container {
@@ -152,7 +470,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end; 
+    justify-content: space-between; 
     margin: 1vh 0 0 0; 
 }
 
@@ -168,6 +486,14 @@
     letter-spacing: .1em;
     cursor: pointer;
     margin: 0 1vw 0 0;
+}
+
+.addUser_incharge_add_container h1 {
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: .1em;
+    color: var(--text);
+    margin: 0 0 0 1vw;
 }
 
 .addUser_incharge_details_container {
