@@ -1,8 +1,6 @@
 <script setup lang="ts">
 // Dependencies
 
-import { ref } from 'vue';
-
 // Components
 
 // Styles

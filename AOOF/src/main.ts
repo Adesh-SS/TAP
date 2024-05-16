@@ -18,6 +18,8 @@ import PrimeVue from "primevue/config";
 import AutoComplete from 'primevue/autocomplete';
 import Chart from 'primevue/chart';
 import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
+import Calendar from 'primevue/calendar';
 
 //Internal Components
 
@@ -35,5 +37,7 @@ app.component('Chart', Chart);
 app.component('add-users', AddUsers);
 app.component('gen-report', GenReport);
 app.component('Dialog', Dialog);
+app.component('Dropdown', Dropdown);
+app.component('Calendar', Calendar);
 
 app.mount('#app')

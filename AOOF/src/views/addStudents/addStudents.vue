@@ -1,7 +1,7 @@
 <script lang="ts">
 //dependencies
 
-import { ref, nextTick } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Swal from 'sweetalert2';
 
@@ -118,7 +118,7 @@ const saveStudentsByMail = (index: number) => {
     departments.value[currentDepartmentIndex.value].students = [...students.value];
     students.value = [];
     visibleAddStudentModal.value[currentDepartmentIndex.value] = false;
-    const departmentJson = JSON.stringify(departments.value[currentDepartmentIndex.value]);
+    // const departmentJson = JSON.stringify(departments.value[currentDepartmentIndex.value]);
   }
 };
 
@@ -470,6 +470,7 @@ export default {
                   <div 
                     :class="styles.addStudents_viewModal_display_container"
                     v-for="(student, studentIndex) in department.students"
+                    :key="studentIndex"
                   >
                     <div :class="styles.addStudents_viewModal_display_first_sections">
                       <h1>{{ studentIndex + 1 }}</h1>

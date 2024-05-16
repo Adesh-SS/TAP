@@ -28,7 +28,7 @@ interface Incharges {
 
 //variables
 
-const selectedTab = ref<string>('specials');
+const selectedTab = ref<string>('students');
 const visibleAddMentorModal = ref<boolean>(false);
 const visibleAddInchargeModal = ref<boolean>(false);
 const addMentorsMethod = ref<string>('mail');

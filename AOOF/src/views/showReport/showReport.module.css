@@ -1,0 +1,112 @@
+@import url('../../assets/base.css');
+
+.report_container {
+    height: 100vh;
+    width: 100vw;
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.report_header {
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text);
+}
+
+.report_header_left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 50%;
+}
+
+.report_header_left button {
+    margin-left: 1em;
+    height: 5vh;
+    width: 3vw;
+    background: var(--accent);
+    border-radius: 5em;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.report_header_left i {
+    color: var(--background);
+    font-size: 2em;
+}
+
+.report_header_right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    width: 50%;
+}
+
+.report_header_right button {
+    margin-right: 1em;
+    height: 6vh;
+    width: 15vw;
+    background: var(--primary);
+    border-radius: .5em;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    color: var(--background);
+    cursor: pointer;
+}
+
+.report_header_right i {
+    font-size: 1em;
+    margin: 0 1vw 0 0;
+}
+
+.report_main_container {
+    width: 100%;
+    height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.report_options_container {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.report_options_container button {
+    height: 6vh;
+    width: 3vw;
+    background: var(--secondary);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+}
+
+.report_chart_container {
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

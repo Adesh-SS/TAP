@@ -17,7 +17,7 @@ import styles from './adminPage.module.css';
 
 const value = ref<string>("");
 const items = ref<string[]>([]);
-const sideBarSelected = ref<string>('addressBook');
+const sideBarSelected = ref<string>('chartBar');
 
 const search = (event : {query: string}) => {
     items.value = [...Array(10).keys()].map((item) => event.query + '-' + item);
