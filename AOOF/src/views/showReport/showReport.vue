@@ -105,33 +105,57 @@ const chartOptions = ref<ChartOptions | undefined>(undefined);
 
 //functions
 
+const formatDate = (dateString: Date) => {
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+  const year = date.getFullYear();
 
-const setChartData = (): ChartData => {
-  // Generate an array of the last 7 dates
-  const labels = Array.from({length: 7}, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-  }).reverse();
+  return `${day}/${month}/${year}`;
+};
 
-  // Generate an array of student counts (replace this with your actual data)
-  const data = Array.from({length: 7}, () => Math.floor(Math.random() * 100));
+const setChartData = (startDateString: string, endDateString: string, type: string): ChartData => {
+  
+  if (startDateString && endDateString) {
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    const diffInDays = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
 
-  // Generate an array of colors for each bar
-  const backgroundColors = ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 99, 132, 0.2)'];
-  const borderColors = ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 206, 86)', 'rgb(75, 192, 192)', 'rgb(153, 102, 255)', 'rgb(255, 159, 64)', 'rgb(255, 99, 132)'];
+    // Generate an array of dates between the start and end dates
+    const labels = Array.from({length: diffInDays + 1}, (_, i) => {
+      const d = new Date(startDate);
+      d.setDate(d.getDate() + i);
+      return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    });
 
+    // Generate an array of student counts based on the type
+    // Replace this with your actual data
+    const data = Array.from({length: diffInDays + 1}, () => {
+      return Math.floor(Math.random() * 100);
+    });
+
+    // Generate an array of colors for each bar
+    const backgroundColors = Array.from({length: diffInDays + 1}, (_, i) => 'rgba(255, 99, 132)');
+    const borderColors = Array.from({length: diffInDays + 1}, (_, i) => 'rgb(255, 99, 132)');
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Students',
+          data: data,
+          backgroundColor: backgroundColors as any, // array of color strings
+          borderColor: borderColors as any, // array of color strings
+          borderWidth: 1 as any
+        }
+      ]
+    };
+  }
+
+  // Default return statement
   return {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Students',
-        data: data,
-        backgroundColor: backgroundColors as any, // array of color strings
-        borderColor: borderColors as any, // array of color strings
-        borderWidth: 1 as any
-      }
-    ]
+    labels: [],
+    datasets: []
   };
 };
 
@@ -180,6 +204,18 @@ const setChartOptions = () => {
     };
 };
 
+
+const logInput = () => {
+  if (buttondisplay.value && endDateDisplay.value) {
+  chartData.value = setChartData(
+    buttondisplay.value?.toISOString() ?? '',
+    endDateDisplay.value?.toISOString() ?? '',
+    selectedType.value ?? ''
+  );
+  } else {
+    console.error('buttondisplay.value or endDateDisplay.value is null');
+  }
+};
 //export
 
 export default{
@@ -191,7 +227,11 @@ export default{
         };
 
         onMounted(() => {
-            chartData.value = setChartData();
+            chartData.value = setChartData(
+              buttondisplay.value?.toISOString() ?? '',
+              endDateDisplay.value?.toISOString() ?? '',
+              selectedType.value ?? ''
+            );
             chartOptions.value = setChartOptions();
         });
 
@@ -206,6 +246,7 @@ export default{
             chartOptions,
             setChartData,
             setChartOptions,
+            logInput,
         };
     }
 }
@@ -236,22 +277,23 @@ export default{
 
             <!-- Report Filter -->
 
-            <div :class="styles.report_options_container">
-                <Dropdown v-model="selectedType" :options="groupedTypes" optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" placeholder="Event Type" class="w-full md:w-14rem">
-                    <template #optiongroup="slotProps">
-                        <div class="flex align-items-center">
-                            <div>{{ slotProps.option.label }}</div>
-                        </div>
-                    </template>
-                </Dropdown>
-                <Calendar v-model="buttondisplay" showIcon :showOnFocus="false" inputId="buttondisplay" dateFormat="dd/mm/yy" placeholder="From Date - dd/mm/yyyy" />
-                <Calendar v-model="endDateDisplay" showIcon :showOnFocus="false" inputId="enddisplay" dateFormat="dd/mm/yy" placeholder="To Date - dd/mm/yyyy" />
-            </div>
+            <form :class="styles.report_options_container" @submit.prevent="logInput">
+              <Dropdown v-model="selectedType" :options="groupedTypes" optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" placeholder="Event Type" class="w-full md:w-14rem">
+                <template #optiongroup="slotProps">
+                  <div class="flex align-items-center">
+                    <div>{{ slotProps.option.label }}</div>
+                  </div>
+                </template>
+              </Dropdown>
+              <Calendar v-model="buttondisplay" showIcon :showOnFocus="false" inputId="buttondisplay" dateFormat="dd/mm/yy" placeholder="From Date - dd/mm/yyyy" />
+              <Calendar v-model="endDateDisplay" showIcon :showOnFocus="false" inputId="enddisplay" dateFormat="dd/mm/yy" placeholder="To Date - dd/mm/yyyy" />
+              <button type="submit" style="display: none;" />
+            </form>
 
             <!-- Report Graph -->
 
             <div :class="styles.report_chart_container">
-              <Chart type="bar" :data="chartData" :options="chartOptions" />
+              <Chart type="bar" :data="chartData" :options="chartOptions" :width="800" :height="400" />
             </div>
         </div>
     </div>

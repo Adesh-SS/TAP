@@ -103,6 +103,10 @@
     color: var(--text);
 }
 
+.invi_button {
+    display: none !important;
+}
+
 .report_chart_container {
     width: 100%;
     height: 80vh;
