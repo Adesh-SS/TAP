@@ -8,6 +8,9 @@ import landingPage from '@/views/landingPage/landingPage.vue'
 import adminPage from '@/views/adminPage/adminPage.vue'
 import addStudents from '@/views/addStudents/addStudents.vue';
 import showReport from '@/views/showReport/showReport.vue';
+import studentDashboard from '@/views/studentDashboard/studentDashboard.vue';
+import MentorDashboard from '@/views/mentorDashboard/mentorDashboard.vue';
+import SplLabDashboard from '@/views/splLabDashboard/splLabDashboard.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +35,21 @@ const router = createRouter({
       name: "Show Report",
       component: showReport
     },
+    {
+      path: "/student",
+      name: "Student",
+      component: studentDashboard
+    },
+    {
+      path: "/mentor",
+      name: "Mentor",
+      component: MentorDashboard
+    },
+    {
+      path: "/specialLabs",
+      name: "Special Labs",
+      component: SplLabDashboard
+    }
   ]
 })
 

@@ -25,6 +25,7 @@ import Calendar from 'primevue/calendar';
 
 import AddUsers from './components/userDetails/addUsers.vue';
 import GenReport from './components/userReport/genReport.vue';
+import AddOD from './components/odDetails/addOD.vue';
 
 const app = createApp(App)
 
@@ -36,6 +37,7 @@ app.component('AutoComplete', AutoComplete);
 app.component('Chart', Chart);
 app.component('add-users', AddUsers);
 app.component('gen-report', GenReport);
+app.component('add-od', AddOD);
 app.component('Dialog', Dialog);
 app.component('Dropdown', Dropdown);
 app.component('Calendar', Calendar);
