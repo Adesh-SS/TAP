@@ -19,6 +19,8 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "flowbite": "^2.3.0",
     "flowbite-vue": "^0.1.4",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
     "papaparse": "^5.4.1",
     "pinia": "^2.1.7",
     "primeflex": "^3.3.1",

@@ -3,6 +3,8 @@
 
 import { useRouter } from 'vue-router';
 import { ref, onMounted } from "vue";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 //style
 
@@ -216,6 +218,50 @@ const logInput = () => {
     console.error('buttondisplay.value or endDateDisplay.value is null');
   }
 };
+
+const downloadAsPDF = () => {
+  let reportSection = document.getElementById('reportSection');
+      if (reportSection) {
+        html2canvas(reportSection).then(canvas => {
+          let imgData = canvas.toDataURL('image/png');
+          let pdf = new jsPDF('p', 'mm', 'a4');
+          let pdfWidth = pdf.internal.pageSize.getWidth();
+          let pdfHeight = pdf.internal.pageSize.getHeight();
+          let canvasWidth = canvas.width;
+          let canvasHeight = canvas.height;
+
+          // Get the event type and dates from this.chartData
+          let eventType = this.chartData.eventType;
+          let [fromDate, toDate] = this.chartData.eventDates.split(' to ');
+
+          // Add the report details
+          pdf.setFontSize(20);
+          pdf.text('Student On-Duty Report', pdfWidth / 2, 20, { align: 'center' });
+          pdf.setFontSize(16);
+          pdf.text(`Type of event: ${eventType}`, pdfWidth / 2, 30, { align: 'center' });
+          pdf.text(`From date: ${fromDate}`, pdfWidth / 2, 40, { align: 'center' });
+          pdf.text(`To date: ${toDate}`, pdfWidth / 2, 50, { align: 'center' });
+
+          // Calculate the width and height based on the canvas aspect ratio
+          let imgWidth = pdfWidth;
+          let imgHeight = (canvasHeight * imgWidth) / canvasWidth;
+
+          if (imgHeight > pdfHeight) {
+            imgHeight = pdfHeight;
+            imgWidth = (canvasWidth * imgHeight) / canvasHeight;
+          }
+
+          let x = (pdfWidth - imgWidth) / 2;
+          let y = (pdfHeight - imgHeight) / 2 + 60; // Adjust the y position to account for the added text
+
+          pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+          pdf.save("report.pdf");
+        });
+  } else {
+    console.error('Element with id "reportSection" not found');
+  }
+};
+
 //export
 
 export default{
@@ -247,6 +293,7 @@ export default{
             setChartData,
             setChartOptions,
             logInput,
+            downloadAsPDF,
         };
     }
 }
@@ -264,9 +311,9 @@ export default{
                 </button>
             </div>
             <div :class="styles.report_header_right">
-                <button>
-                    <i class="pi pi-download"></i>
-                    Download
+                <button @click="downloadAsPDF">
+                  <i class="pi pi-download"></i>
+                  Download
                 </button>
             </div>
         </div>
@@ -292,7 +339,7 @@ export default{
 
             <!-- Report Graph -->
 
-            <div :class="styles.report_chart_container">
+            <div :class="styles.report_chart_container" id="reportSection">
               <Chart type="bar" :data="chartData" :options="chartOptions" :width="800" :height="400" />
             </div>
         </div>
