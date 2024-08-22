@@ -32,6 +32,12 @@ interface ODDetails {
     description: string;
 }
 
+interface Category {
+  label: string;
+  code: string;
+  items: Type[];
+}
+
 //Functions and variables
 
 const sideBarSelected = ref<string>('home');
@@ -39,6 +45,30 @@ const onduties = ref<OnDuty[]>([]);
 const addEventDetails = ref<boolean>();
 const viewOdModal = ref<boolean[]>([]);
 const odDetails = ref<ODDetails[]>([]);
+const selectedType = ref<string | null>(null);
+const groupedTypes = ref<Category[]>([
+  {
+    label: 'Technical',
+    code: 'TE',
+    items: [
+      { label: 'All', value: 'All'},
+      { label: 'Paper Presentation', value: 'Paper Presentation' },
+      { label: 'Project Presentation', value: 'Project Presentation' },
+      { label: 'Hackathon', value: 'Hackathon' },
+      { label: 'Internship', value: 'Internship' }
+    ]
+  },
+  {
+    label: 'Non-Technical',
+    code: 'NTE',
+    items: [
+      { label: 'Non-Technical', value: 'Non-Technical' },
+    ]
+  },
+]);
+const buttondisplay = ref<Date | null>(null);
+const endDateDisplay = ref<Date | null>(null);
+const description = ref<string>('');
 
 const addOnduty = () => {
   Swal.fire({
@@ -97,6 +127,11 @@ export default {
         addOnduty,
         handleModalToggle,
         handleViewModalToggle,
+        selectedType,
+        groupedTypes,
+        buttondisplay,
+        endDateDisplay,
+        description
     };
   }
 };
@@ -163,55 +198,44 @@ export default {
               header="Add Students"
               :style="{ width: '70vw', height: '80vh'}"
             >
-                <div :class="styles.studentDashboard_modal_container">
-                    <div :class="styles.studentDashboard_modal_content_container">
-                        <div :class="styles.studentDashboard_modal_content_body">
-                            <div :class="styles.studentDashboard_modal_content_body_container">
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Student(Roll Number)(Mail)</label>
-                                    <input type="text" placeholder="Student.." />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Event Name</label>
-                                    <input type="text" placeholder="Event Name" />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>From Date</label>
-                                    <input type="date" />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>To Date</label>
-                                    <input type="date" />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Description</label>
-                                    <textarea placeholder="Description"></textarea>
-                                </div>
-                            </div>
-                            <div :class="styles.studentDashboard_modal_content_body_container">
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Special Lab</label>
-                                    <input type="text" placeholder="Special Lab" />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>OD Type</label>
-                                    <select>
-                                        <option value="1">Technical</option>
-                                        <option value="2">Non - Technical</option>
-                                    </select>
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Logger ID</label>
-                                    <input type="text" placeholder="Logger ID" />
-                                </div>
-                                <div :class="styles.studentDashboard_modal_content_body_container_input">
-                                    <label>Mentor ID</label>
-                                    <input type="text" placeholder="Mentor ID" />
-                                </div>
-                            </div>
+                <div :class="styles.studentDashboard_modalContent">
+                    <div :class="styles.studentDashboard_modalContent_container">
+                        <div :class="styles.studentDashboard_modalContent_container_student_input">
+                            <label>Student:</label>
+                            <input type="text" placeholder="Student(Roll Number)(Mail)" />
                         </div>
-                        <div :class="styles.studentDashboard_modal_content_footer">
-                            <button>Submit</button>
+                        <div :class="styles.studentDashboard_modalContent_container_staff_input">
+                            <label>Mentor ID</label>
+                            <input type="text" placeholder="Mentor ID" />
+                        </div>
+                        <div :class="styles.studentDashboard_modalContent_container_staff_input">
+                            <label>Special Lab</label>
+                            <input type="text" placeholder="Special Lab" />
+                        </div>
+                        <div :class="styles.studentDashboard_modalContent_container_student_event_type">
+                            <Dropdown v-model="selectedType" :options="groupedTypes" optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" placeholder="Event Type" class="w-full md:w-14rem">
+                                <template #optiongroup="slotProps">
+                                <div class="flex align-items-center">
+                                    <div>{{ slotProps.option.label }}</div>
+                                </div>
+                                </template>
+                            </Dropdown>
+                            <Calendar v-model="buttondisplay" showIcon :showOnFocus="false" inputId="buttondisplay" dateFormat="dd/mm/yy" placeholder="From Date - dd/mm/yyyy" />
+                            <Calendar v-model="endDateDisplay" showIcon :showOnFocus="false" inputId="enddisplay" dateFormat="dd/mm/yy" placeholder="To Date - dd/mm/yyyy" />
+                        </div>
+                    </div>
+                    <div :class="styles.studentDashboard_modalContent_container">
+                        <div :class="styles.studentDashboard_modalContent_container_event_holder">
+                            <label>Logger ID</label>
+                            <input type="text" placeholder="Logger ID" />
+                        </div>
+                        <div :class="styles.studentDashboard_modalContent_container_event_holder">
+                            <label>Event Name</label>
+                            <input type="text" placeholder="Event Name" />
+                        </div>
+                        <div :class="styles.studentDashboard_modalContent_container_event_holder">
+                            <label>Description</label>
+                            <Textarea v-model="description" autoResize rows="5" cols="30" />
                         </div>
                     </div>
                 </div>
