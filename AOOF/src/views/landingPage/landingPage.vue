@@ -21,15 +21,15 @@ import 'primeicons/primeicons.css'
                 <img :src="clgLogo" alt="clgLogo" />
             </div>
             <div :class="styles.landingPage_facultyLogin_container">
-                <h1>Faculty Login</h1>
+                <h1>Login</h1>
                 <form>
-                    <input type="text" placeholder="Mentor ID / Special Lab ID / Admin ID" />
+                    <input type="text" placeholder="Roll Number / Mentor ID / Admin ID" />
                     <input type="password" placeholder="Password" />
                     <button>Sign In</button>
                 </form>
             </div>
             <div :class="styles.landingPage_studentLogin_container">
-                <h1>Student Login</h1>
+                <h1>Google Login</h1>
                 <button>
                     <i class="pi pi-google"></i>
                     Sign In With Google
