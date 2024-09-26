@@ -20,6 +20,7 @@ import Chart from 'primevue/chart';
 import Dialog from 'primevue/dialog';
 import Dropdown from 'primevue/dropdown';
 import Calendar from 'primevue/calendar';
+import ToastService from 'primevue/toastservice';
 
 //Internal Components
 
@@ -32,6 +33,7 @@ const app = createApp(App)
 app.use(createPinia());
 app.use(router);
 app.use(PrimeVue, { ripple: true  });
+app.use(ToastService);
 
 app.component('AutoComplete', AutoComplete);
 app.component('Chart', Chart);

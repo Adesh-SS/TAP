@@ -1,11 +1,13 @@
-import express from 'express';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import Joi from 'joi';
+import joiObjectId from 'joi-objectid';
 import passwordComplexity from 'joi-password-complexity';
 
 dotenv.config();
+
+const objectId = joiObjectId(Joi);
 
 const adminSchema = new mongoose.Schema({
     name: {
@@ -18,15 +20,12 @@ const adminSchema = new mongoose.Schema({
     loginId: {
         type: String,
         required: true,
-        minlength: 3,
-        maxlength: 50,
         unique: true
     },
     password: {
         type: String,
         required: true,
-        minlength: 8,
-        maxlength: 1024
+        minlength: 6,
     },
     role: {
         type: String,
@@ -48,36 +47,37 @@ const adminSchema = new mongoose.Schema({
     total_approved_od: {
         type: Number,
         default: 0
-    },
-    firstLogin: {
-        type: Boolean,
-        default: true
     }
-},
-    { timestamps: true }
-);
+}, { timestamps: true });
 
 adminSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.JWT_PRIVATE_KEY);
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.JWT_SECRET, {
+        expiresIn: '1h'
+    });
     return token;
 }
 
 const Admin = mongoose.model('Admin', adminSchema);
 
-const validateAdmin = (admin) => {
+const validateAdminLogin = (admin) => {
+    const complexityOptions = {
+        min: 6,
+        max: 30,
+        lowerCase: 1,
+        upperCase: 1,
+        numeric: 1,
+        symbol: 1
+    }
+
+    const complexitySchema = passwordComplexity(complexityOptions).required();
+
     const schema = Joi.object({
-        name: Joi.string().min(3).max(50).required(),
-        loginId: Joi.string().min(3).max(50).required(),
-        password: passwordComplexity().required(),
-        role: Joi.string().required(),
-        batches: Joi.array().items(Joi.objectId()),
-        mentors: Joi.array().items(Joi.objectId()),
-        pic: Joi.array().items(Joi.objectId()),
-        total_approved_od: Joi.number()
+        loginId: Joi.string().required(),
+        password: complexitySchema
     });
 
     return schema.validate(admin);
 }
 
-export { Admin, validateAdmin };
+export { Admin, validateAdminLogin };
 export default Admin;
