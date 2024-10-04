@@ -2,6 +2,7 @@
 //Dependencies
 
 import { ref, onMounted } from 'vue';
+import axios from 'axios';
 
 //Components
 
@@ -13,11 +14,19 @@ import styles from './adminPage.module.css';
 
 //Interfaces
 
+interface Batch {
+    batchYear: string;
+    batchCount: number;
+}
+
 //Variables
 
-var sideBarSelected = ref<string>('home');
+const sideBarSelected = ref<string>('addressBook');
 const value = ref<string>("");
 const items = ref<string[]>([]);
+const addUserTab = ref<string>('students');
+const batches = ref<Batch[]>([]);
+const addBatchModel = ref<boolean>(false);
 
 //Functions
 
@@ -30,6 +39,27 @@ const handleLogout = () => {
     localStorage.removeItem('auth');
 
     window.location.reload();
+}
+
+const handleAddBatch = async(event: Event) => {
+    event.preventDefault();
+
+    const name = (event.target as HTMLFormElement).batchName.value;
+    
+    if(name.length === 9){
+        try {
+            const response = await axios.post('http://localhost:5000/batch/addBatch', {
+                name
+            });
+
+            if(response.status === 200){
+                addBatchModel.value = false;
+                (event.target as HTMLFormElement).reset();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 }
 
 //Exports
@@ -94,7 +124,11 @@ export default{
         firstYearCount,
         secondYearCount,
         thirdYearCount,
-        finalYearCount
+        finalYearCount,
+        addUserTab,
+        batches,
+        addBatchModel,
+        handleAddBatch
        } 
     }
 }
@@ -194,6 +228,129 @@ export default{
                     <hr />
                     <h2>{{ finalYearCount }}</h2>
                   </div>
+                </div>
+
+                <!-- User Details Page -->
+
+                <div v-else-if="sideBarSelected === 'addressBook'">
+                    <div :class="styles.adminPage_addUsers_whole">
+                        <div :class="styles.adminPage_addUsers_container">
+                            <div :class="styles.adminPage_addUsers_tabs_container">
+                                <div 
+                                    :class="addUserTab === 'students' ? styles.adminPage_addUsers_selected_tabs : styles.adminPage_addUsers_tabs"
+                                    @click="addUserTab = 'students'"
+                                >
+                                    <h1>Students</h1>
+                                </div>
+                                <div 
+                                    :class="addUserTab === 'mentors' ? styles.adminPage_addUsers_selected_tabs : styles.adminPage_addUsers_tabs"
+                                    @click="addUserTab = 'mentors'"
+                                >
+                                    <h1>Mentors</h1>
+                                </div>
+                                <div 
+                                    :class="addUserTab === 'pic' ? styles.adminPage_addUsers_selected_tabs : styles.adminPage_addUsers_tabs"
+                                    @click="addUserTab = 'pic'"
+                                >
+                                    <h1>PIC</h1>
+                                </div>
+                            </div>
+
+                            <div :class="styles.adminPage_addUsers_main_content">
+
+                                <div v-if="addUserTab === 'students'">
+                                    <div :class="styles.adminPage_addUsers_main_content_top">
+                                        <button @click="addBatchModel = !addBatchModel">
+                                            <i class="pi pi-plus-circle"></i>
+                                            Batch
+                                        </button>
+                                    </div>
+
+                                    <div :class="styles.adminPage_addUsers_main_content_bottom">
+                                        <Dialog
+                                            v-model="addBatchModel"
+                                            header="Add Batch"
+                                            :visible="addBatchModel"
+                                            @update:visible="addBatchModel = $event"
+                                            :modal="true"
+                                            :closable="true"
+                                            :style="{ width: '40vw', height: '40vh' }"
+                                        >
+                                            <div :class="styles.adminPage_addUsers_batches_inside_modal">
+                                                <form @submit.prevent="handleAddBatch">
+                                                    <div :class="styles.input_group">
+                                                        <input required type="text" name="batchName" autocomplete="off" :class="styles.input">
+                                                        <label :class="styles.user_label">Batch Name: XXXX-XXXX</label>
+                                                    </div>
+                                                
+                                                    <div :class="styles.adminPage_addUsers_batches_inside_modal_button_container">
+                                                        <button 
+                                                            type="submit"
+                                                            :class="styles.adminPage_addUsers_batches_inside_modal_add_button"
+                                                        >
+                                                            Add
+                                                        </button>
+                                                
+                                                        <button 
+                                                            type="button"
+                                                            :class="styles.adminPage_addUsers_batches_inside_modal_cancel_button"
+                                                            @click="addBatchModel = false"
+                                                        >
+                                                            Cancel
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </Dialog>
+                                        <div 
+                                            :class="styles.adminPage_addUsers_batches_container"
+                                            v-for="(batch, index) in batches"
+                                            :key="index"
+                                        >
+                                            <div :class="styles.adminPage_addUsers_batches_year_container">
+                                                <h1>{{ batch.batchYear }}</h1>
+                                            </div>
+                                            <div :class="styles.adminPage_addUsers_batches_count_container">
+                                                <h1>{{ batch.batchCount }}</h1>
+                                            </div>
+                                            <div :class="styles.adminPage_addUsers_batches_enter_container">
+                                                <button>
+                                                    <i class="pi pi-eye"></i>
+                                                </button>
+                                            </div>
+                                            <div :class="styles.adminPage_addUsers_batches_delete_container">
+                                                <button>
+                                                    <i class="pi pi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-else-if="addUserTab === 'mentors'">
+                                    <div :class="styles.adminPage_addUsers_main_content_top">
+                                        <button>
+                                            <i class="pi pi-plus-circle"></i>
+                                            Mentors
+                                        </button>
+                                    </div>
+                                    
+                                    <div :class="styles.adminPage_addUsers_main_content_bottom"></div>
+                                </div>
+
+                                <div v-else-if="addUserTab === 'pic'">
+                                    <div :class="styles.adminPage_addUsers_main_content_top">
+                                        <button>
+                                            <i class="pi pi-plus-circle"></i>
+                                            PIC
+                                        </button>
+                                    </div>
+                                    
+                                    <div :class="styles.adminPage_addUsers_main_content_bottom"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -283,3 +283,312 @@
     font-weight: 500;
     margin: 1vh 0 1vh 0;
 }
+
+.adminPage_addUsers_whole {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 100vw;
+}
+
+.adminPage_addUsers_container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0 1vw 2vh 1vw;
+    height: 80vh;
+    width: 90vw;
+    background: var(--secondary);
+    border-radius: 0 0 1em 1em;
+    overflow-y: auto;
+}
+
+.adminPage_addUsers_tabs_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 8vh;
+    width: 100%;
+    background: var(--background);
+    border-bottom: 2px solid var(--accent);
+}
+
+.adminPage_addUsers_tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 12vw;
+    margin-right: 1vw;
+    border-radius: 1em 1em 0 0;
+    cursor: pointer;
+    background: var(--background);
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.adminPage_addUsers_selected_tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 12vw;
+    margin-right: 1vw;
+    border-radius: 1em 1em 0 0;
+    cursor: pointer;
+    background: var(--secondary);
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(0);
+}
+
+.adminPage_addUsers_tabs h1 {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_selected_tabs h1 {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_main_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 70vh;
+    width: 100%;
+}
+
+.adminPage_addUsers_main_content_top {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: 10vh;
+    width: 90vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_main_content_top button {
+    color: var(--background);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 12vw;
+    height: 7vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    background: var(--primary);
+    cursor: pointer;
+    margin: 2vh 2vw 2vh 0;
+}
+
+.adminPage_addUsers_main_content_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 60vh;
+    width: 100vw;
+    overflow-y: auto;
+}
+
+.adminPage_addUsers_batches_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+    height: 12vh;
+    width: 88vw;
+    border-radius: 1em;
+    margin: 1vh 1vw 1vh 1vw;
+    background: var(--background);
+}
+
+.adminPage_addUsers_batches_year_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 40vw;
+    border-radius: 1em 0 0 1em;
+}
+
+.adminPage_addUsers_batches_year_container h1 {
+    color: var(--text);
+    font-size: 2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+}
+
+.adminPage_addUsers_batches_count_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 30vw;
+}
+
+.adminPage_addUsers_batches_count_container h1 {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+}
+
+.adminPage_addUsers_batches_enter_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 10vw;
+}
+
+.adminPage_addUsers_batches_enter_container button {
+    color: var(--text);
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 8vw;
+    height: 5vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.adminPage_addUsers_batches_enter_container i {
+    color: var(--text);
+    font-size: 1.8em;
+}
+
+.adminPage_addUsers_batches_delete_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 10vw;
+    border-radius: 0 1em 1em 0;
+}
+
+.adminPage_addUsers_batches_delete_container button {
+    color: var(--text);
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 8vw;
+    height: 5vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+}
+
+.adminPage_addUsers_batches_delete_container i {
+    color: var(--text);
+    font-size: 1.8em;
+}
+
+.adminPage_addUsers_batches_inside_modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+    width: 36vw;
+}
+
+.input_group {
+    position: relative;
+}
+   
+.input {
+    border: solid 1.5px var(--accent);
+    border-radius: 1rem;
+    background: none;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--text);
+    transition: border 150ms cubic-bezier(0.4,0,0.2,1);
+}
+   
+.user_label {
+    position: absolute;
+    left: 15px;
+    color: var(--text);
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: 150ms cubic-bezier(0.4,0,0.2,1);
+}
+   
+.input:focus, input:valid {
+    outline: none;
+    border: 1.5px solid var(--accent);
+}
+   
+.input:focus ~ label, input:valid ~ label {
+    transform: translateY(-50%) scale(0.8);
+    background-color: var(--background);
+    padding: 0 .2em;
+    color: var(--accent);
+}
+
+.adminPage_addUsers_batches_inside_modal_button_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    width: 36vw;
+    margin: 2vh 0 0 0;
+}
+
+.adminPage_addUsers_batches_inside_modal_add_button {
+    color: var(--background);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 12vw;
+    height: 7vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    background: var(--primary);
+    cursor: pointer;
+    margin: 0 2vw 0 0;
+}
+
+.adminPage_addUsers_batches_inside_modal_cancel_button {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 12vw;
+    height: 7vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    border: 1px solid red;
+    cursor: pointer;
+    background: none;
+}
