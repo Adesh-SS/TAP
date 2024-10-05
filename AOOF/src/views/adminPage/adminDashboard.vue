@@ -3,6 +3,8 @@
 
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
 
 //Components
 
@@ -19,53 +21,24 @@ interface Batch {
     batchCount: number;
 }
 
-//Variables
-
-const sideBarSelected = ref<string>('addressBook');
-const value = ref<string>("");
-const items = ref<string[]>([]);
-const addUserTab = ref<string>('students');
-const batches = ref<Batch[]>([]);
-const addBatchModel = ref<boolean>(false);
-
-//Functions
-
-const search = (event : {query: string}) => {
-    items.value = [...Array(10).keys()].map((item) => event.query + '-' + item);
-}
-
-const handleLogout = () => {
-    localStorage.removeItem('inutile');
-    localStorage.removeItem('auth');
-
-    window.location.reload();
-}
-
-const handleAddBatch = async(event: Event) => {
-    event.preventDefault();
-
-    const name = (event.target as HTMLFormElement).batchName.value;
-    
-    if(name.length === 9){
-        try {
-            const response = await axios.post('http://localhost:5000/batch/addBatch', {
-                name
-            });
-
-            if(response.status === 200){
-                addBatchModel.value = false;
-                (event.target as HTMLFormElement).reset();
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-}
-
 //Exports
 
 export default{
+    components: {
+        Toast
+    },
     setup() {
+        //variables
+
+        const sideBarSelected = ref<string>('addressBook');
+        const value = ref<string>("");
+        const items = ref<string[]>([]);
+        const addUserTab = ref<string>('students');
+        const batches = ref<Batch[]>([]);
+        const addBatchModel = ref<boolean>(false);
+        const toast = useToast();
+
+
         const chartData = ref<any>();
         const chartOptions = ref<any>();
 
@@ -112,6 +85,46 @@ export default{
         chartOptions.value = setChartOptions();
         });
 
+        //Functions
+
+        const search = (event : {query: string}) => {
+            items.value = [...Array(10).keys()].map((item) => event.query + '-' + item);
+        }
+
+        const handleLogout = () => {
+            localStorage.removeItem('inutile');
+            localStorage.removeItem('auth');
+
+            window.location.reload();
+        }
+
+        const handleAddBatch = async(event: Event) => {
+            event.preventDefault();
+
+            const name = (event.target as HTMLFormElement).batchName.value;
+            
+            if(name.length === 9){
+                try {
+                    const response = await axios.post('http://localhost:5000/batch/addBatch', {
+                        name
+                    });
+
+                    if(response.status === 200){
+                        addBatchModel.value = false;
+                        (event.target as HTMLFormElement).reset();
+                        toast.add({severity:'success', summary: 'Success', detail: 'Batch added successfully', life: 2000});
+                    }
+                } catch (error) {
+                    if (axios.isAxiosError(error) && error.response) {
+                        toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                    } else {
+                        toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                    }
+                }
+            } else {
+                toast.add({severity:'error', summary: 'Error', detail: 'Batch name should be of 9 characters', life: 2000});
+            }
+        }
        return {
         styles,
         sideBarSelected,
@@ -128,7 +141,8 @@ export default{
         addUserTab,
         batches,
         addBatchModel,
-        handleAddBatch
+        handleAddBatch,
+        toast
        } 
     }
 }
@@ -136,6 +150,7 @@ export default{
 
 <template>
     <div :class="styles.adminPage_container">
+        <Toast />
 
         <!-- Side Bar -->
 
