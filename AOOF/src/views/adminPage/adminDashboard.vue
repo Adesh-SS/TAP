@@ -5,6 +5,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Toast from 'primevue/toast';
 import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router';
 
 //Components
 
@@ -37,7 +38,7 @@ export default{
         const batches = ref<Batch[]>([]);
         const addBatchModel = ref<boolean>(false);
         const toast = useToast();
-        const deleteConfirmationModel = ref<boolean>(false);
+        const router = useRouter();
 
 
         const chartData = ref<any>();
@@ -157,7 +158,10 @@ export default{
                     toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
                 }
             }
-            deleteConfirmationModel.value = false;
+        }
+
+        const handleNavigateToBatch = (name: string) => {
+            router.push({ name: 'Add Students', params: { year: name } });
         }
 
         onMounted(() => {
@@ -185,7 +189,7 @@ export default{
         handleAddBatch,
         toast,
         handleDeleteBatch,
-        deleteConfirmationModel
+        handleNavigateToBatch
        } 
     }
 }
@@ -372,43 +376,14 @@ export default{
                                                 <h1>{{ batch.studentsCount }}</h1>
                                             </div>
                                             <div :class="styles.adminPage_addUsers_batches_enter_container">
-                                                <button>
+                                                <button @click="handleNavigateToBatch(batch.name)">
                                                     <i class="pi pi-eye"></i>
                                                 </button>
                                             </div>
                                             <div :class="styles.adminPage_addUsers_batches_delete_container">
-                                                <button @click="deleteConfirmationModel = !deleteConfirmationModel">
+                                                <button @click="handleDeleteBatch(batch.name)">
                                                     <i class="pi pi-trash"></i>
                                                 </button>
-                                                <Dialog
-                                                    v-model="deleteConfirmationModel"
-                                                    header="Delete Batch"
-                                                    :visible="deleteConfirmationModel"
-                                                    @update:visible="deleteConfirmationModel = $event"
-                                                    :modal="true"
-                                                    :closable="true"
-                                                    :style="{ width: '40vw', height: '40vh' }"
-                                                >
-                                                    <div :class="styles.adminPage_addUsers_batches_delete_inside_modal">
-                                                        <h1>Are you sure you want to delete this batch?</h1>
-                                                        <div :class="styles.adminPage_addUsers_batches_delete_inside_modal_button_container">
-                                                            <button 
-                                                                type="button"
-                                                                :class="styles.adminPage_addUsers_batches_delete_inside_modal_delete_button"
-                                                                @click="handleDeleteBatch(batch.name)"
-                                                            >
-                                                                Delete
-                                                            </button>
-                                                            <button 
-                                                                type="button"
-                                                                :class="styles.adminPage_addUsers_batches_delete_inside_modal_cancel_button"
-                                                                @click="deleteConfirmationModel = false"
-                                                            >
-                                                                Cancel
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </Dialog>
                                             </div>
                                         </div>
                                     </div>

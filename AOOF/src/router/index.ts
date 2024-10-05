@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import landingPage from '@/views/landingPage/landingPage.vue'
 import adminPage from '@/views/adminPage/adminPage.vue'
-import addStudents from '@/views/addStudents/addStudents.vue';
+import addStudents from '@/views/adminPage/addStudents/addStudents.vue';
 import showReport from '@/views/showReport/showReport.vue';
 import studentDashboard from '@/views/studentDashboard/studentDashboard.vue';
 import MentorDashboard from '@/views/mentorDashboard/mentorDashboard.vue';
@@ -32,7 +32,7 @@ const router = createRouter({
       component: AdminDashboard
     },
     {
-      path: "/admin/:year",
+      path: "/adminDashboard/:year",
       name: "Add Students",
       component: addStudents
     },
