@@ -45,3 +45,10 @@ app.component('Dropdown', Dropdown);
 app.component('Calendar', Calendar);
 
 app.mount('#app')
+
+const clearLocalStorage = () => {
+    localStorage.clear();
+    console.log('Local storage cleared');
+};
+
+setInterval(clearLocalStorage, 3600000);

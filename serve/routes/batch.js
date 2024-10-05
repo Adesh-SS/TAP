@@ -42,4 +42,35 @@ router.post('/addBatch', async (req, res) => {
     }
 });
 
+//Route: Get All Branches
+
+router.get('/getBatches', async (req, res) => {
+    try {
+        const batches = await Batch.find();
+        res.status(200).send(batches);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+//Route: Delete Branch
+
+router.delete('/deleteBatch/:name', async (req, res) => {
+    try {
+        const batch = await Batch.findOneAndDelete({ name: req.params.name });
+        if (!batch) return res.status(404).send('Batch not found');
+
+        await Admin.updateMany(
+            { batches: batch._id },
+            { $pull: { batches: batch._id } }
+        );
+
+        res.status(200).send('Batch deleted successfully');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 export default router;

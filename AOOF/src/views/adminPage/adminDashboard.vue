@@ -17,8 +17,8 @@ import styles from './adminPage.module.css';
 //Interfaces
 
 interface Batch {
-    batchYear: string;
-    batchCount: number;
+    name: string;
+    studentsCount: number;
 }
 
 //Exports
@@ -37,6 +37,7 @@ export default{
         const batches = ref<Batch[]>([]);
         const addBatchModel = ref<boolean>(false);
         const toast = useToast();
+        const deleteConfirmationModel = ref<boolean>(false);
 
 
         const chartData = ref<any>();
@@ -80,11 +81,6 @@ export default{
             };
         };
 
-        onMounted(() => {
-        chartData.value = setChartData();
-        chartOptions.value = setChartOptions();
-        });
-
         //Functions
 
         const search = (event : {query: string}) => {
@@ -112,6 +108,8 @@ export default{
                     if(response.status === 200){
                         addBatchModel.value = false;
                         (event.target as HTMLFormElement).reset();
+                        const newBatch = { name, studentsCount: 0 }; // Assuming new batch has 0 students initially
+                        batches.value.push(newBatch);
                         toast.add({severity:'success', summary: 'Success', detail: 'Batch added successfully', life: 2000});
                     }
                 } catch (error) {
@@ -125,6 +123,49 @@ export default{
                 toast.add({severity:'error', summary: 'Error', detail: 'Batch name should be of 9 characters', life: 2000});
             }
         }
+        
+        const fetchBranches = async() => {
+            try {
+                const response = await axios.get('http://localhost:5000/batch/getBatches');
+                const branches = response.data.map((batch: Batch) => ({
+                    name: batch.name,
+                    studentsCount: batch.studentsCount
+                }));
+
+                batches.value.push(...branches);
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
+        }
+
+        const handleDeleteBatch = async(name: string) => {
+            try {
+                const response = await axios.delete(`http://localhost:5000/batch/deleteBatch/${name}`);
+
+                if(response.status === 200){
+                    batches.value = batches.value.filter((batch) => batch.name !== name);
+                    toast.add({severity:'success', summary: 'Success', detail: 'Batch deleted successfully', life: 2000});
+                }
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
+            deleteConfirmationModel.value = false;
+        }
+
+        onMounted(() => {
+            chartData.value = setChartData();
+            chartOptions.value = setChartOptions();
+            fetchBranches();
+        });
+        
        return {
         styles,
         sideBarSelected,
@@ -142,7 +183,9 @@ export default{
         batches,
         addBatchModel,
         handleAddBatch,
-        toast
+        toast,
+        handleDeleteBatch,
+        deleteConfirmationModel
        } 
     }
 }
@@ -319,14 +362,14 @@ export default{
                                         </Dialog>
                                         <div 
                                             :class="styles.adminPage_addUsers_batches_container"
-                                            v-for="(batch, index) in batches"
+                                            v-for="(batch, index) in batches.slice().reverse()"
                                             :key="index"
                                         >
                                             <div :class="styles.adminPage_addUsers_batches_year_container">
-                                                <h1>{{ batch.batchYear }}</h1>
+                                                <h1>{{ batch.name }}</h1>
                                             </div>
                                             <div :class="styles.adminPage_addUsers_batches_count_container">
-                                                <h1>{{ batch.batchCount }}</h1>
+                                                <h1>{{ batch.studentsCount }}</h1>
                                             </div>
                                             <div :class="styles.adminPage_addUsers_batches_enter_container">
                                                 <button>
@@ -334,9 +377,38 @@ export default{
                                                 </button>
                                             </div>
                                             <div :class="styles.adminPage_addUsers_batches_delete_container">
-                                                <button>
+                                                <button @click="deleteConfirmationModel = !deleteConfirmationModel">
                                                     <i class="pi pi-trash"></i>
                                                 </button>
+                                                <Dialog
+                                                    v-model="deleteConfirmationModel"
+                                                    header="Delete Batch"
+                                                    :visible="deleteConfirmationModel"
+                                                    @update:visible="deleteConfirmationModel = $event"
+                                                    :modal="true"
+                                                    :closable="true"
+                                                    :style="{ width: '40vw', height: '40vh' }"
+                                                >
+                                                    <div :class="styles.adminPage_addUsers_batches_delete_inside_modal">
+                                                        <h1>Are you sure you want to delete this batch?</h1>
+                                                        <div :class="styles.adminPage_addUsers_batches_delete_inside_modal_button_container">
+                                                            <button 
+                                                                type="button"
+                                                                :class="styles.adminPage_addUsers_batches_delete_inside_modal_delete_button"
+                                                                @click="handleDeleteBatch(batch.name)"
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                            <button 
+                                                                type="button"
+                                                                :class="styles.adminPage_addUsers_batches_delete_inside_modal_cancel_button"
+                                                                @click="deleteConfirmationModel = false"
+                                                            >
+                                                                Cancel
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </Dialog>
                                             </div>
                                         </div>
                                     </div>

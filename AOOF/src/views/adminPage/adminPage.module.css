@@ -414,9 +414,9 @@
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: auto;
-    height: 12vh;
+    height: 5vh;
     width: 88vw;
-    border-radius: 1em;
+    border-radius: .5em;
     margin: 1vh 1vw 1vh 1vw;
     background: var(--background);
 }
@@ -433,7 +433,7 @@
 
 .adminPage_addUsers_batches_year_container h1 {
     color: var(--text);
-    font-size: 2em;
+    font-size: 1.2em;
     letter-spacing: .1em;
     font-weight: 500;
 }
@@ -478,7 +478,7 @@
 
 .adminPage_addUsers_batches_enter_container i {
     color: var(--text);
-    font-size: 1.8em;
+    font-size: 1.4em;
 }
 
 .adminPage_addUsers_batches_delete_container {
@@ -506,7 +506,7 @@
 
 .adminPage_addUsers_batches_delete_container i {
     color: var(--text);
-    font-size: 1.8em;
+    font-size: 1.5em;
 }
 
 .adminPage_addUsers_batches_inside_modal {
@@ -579,6 +579,63 @@
 }
 
 .adminPage_addUsers_batches_inside_modal_cancel_button {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 12vw;
+    height: 7vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    border: 1px solid red;
+    cursor: pointer;
+    background: none;
+}
+
+.adminPage_addUsers_batches_delete_inside_modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 25vh;
+    width: 36vw;
+}
+
+.adminPage_addUsers_batches_delete_inside_modal h1 {
+    color: var(--text);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    margin: 0 0 2vh 0;
+}
+
+.adminPage_addUsers_batches_delete_inside_modal_button_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    width: 36vw;
+    margin: 2vh 0 0 0;
+}
+
+.adminPage_addUsers_batches_delete_inside_modal_delete_button {
+    color: var(--background);
+    font-size: 1.2em;
+    letter-spacing: .1em;
+    font-weight: 500;
+    width: 12vw;
+    height: 7vh;
+    border-radius: .5em;
+    border: none;
+    outline: none;
+    background: red;
+    cursor: pointer;
+    margin: 0 2vw 0 0;
+}
+
+.adminPage_addUsers_batches_delete_inside_modal_cancel_button {
     color: var(--text);
     font-size: 1.2em;
     letter-spacing: .1em;
