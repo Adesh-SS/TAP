@@ -1,0 +1,158 @@
+@import url("../../../assets/base.css");
+
+.addDepartments {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 100vh;
+  width: 100vw;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+  background: var(--background);
+}
+
+.addDepartments_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  height: 10vh;
+}
+
+.addDepartments_header_left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 50%;
+  height: 100%;
+}
+
+.addDepartments_header_left button {
+  margin-left: 1rem;
+  height: 7vh;
+  width: 4vw;
+  background: var(--secondary);
+  color: var(--text);
+  border-radius: 2em;
+  border: none;
+}
+
+.addDepartments_header_left i {
+  font-size: 2rem;
+  color: var(--text);
+}
+
+.addDepartments_header_right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 50%;
+  height: 100%;
+}
+
+.addDepartments_header_right button {
+    height: 7vh;
+    width: 15vw;
+    background: var(--primary);
+    border: none;
+    border-radius: .5em;
+    margin: 0 1em 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.addDepartments_header_right i {
+  font-size: 1.2em;
+  color: var(--background);
+}
+
+.addDepartments_header_right h1 {
+  font-size: 1.5em;
+  color: var(--background);
+  font-weight: 100;
+  margin: 0 0 0 1em;
+}
+
+.addDepartments_modal_inside {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20vh;
+}
+
+.addDepartments_modal_inside_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.input_group {
+    position: relative;
+}
+   
+.input {
+    border: solid 1.5px var(--accent);
+    border-radius: 1rem;
+    background: none;
+    padding: 1rem;
+    font-size: 1rem;
+    color: var(--text);
+    transition: border 150ms cubic-bezier(0.4,0,0.2,1);
+}
+   
+.user_label {
+    position: absolute;
+    left: 15px;
+    color: var(--text);
+    pointer-events: none;
+    transform: translateY(1rem);
+    transition: 150ms cubic-bezier(0.4,0,0.2,1);
+}
+   
+.input:focus, input:valid {
+    outline: none;
+    border: 1.5px solid var(--accent);
+}
+   
+.input:focus ~ label, input:valid ~ label {
+    transform: translateY(-50%) scale(0.8);
+    background-color: var(--background);
+    padding: 0 .2em;
+    color: var(--accent);
+}
+
+.addDepartments_modal_inside_form_button_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20%;
+}
+
+.addDepartments_modal_inside_form_button_container button {
+  height: 7vh;
+  width: 15vw;
+  background: var(--primary);
+  color: var(--background);
+  font-size: 1.5em;
+  border: none;
+  border-radius: .5em;
+  margin: 2em 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

@@ -367,6 +367,7 @@
     justify-content: flex-start;
     height: 70vh;
     width: 100%;
+    overflow-x: hidden;
 }
 
 .adminPage_addUsers_main_content_top {

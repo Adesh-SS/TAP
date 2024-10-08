@@ -4,14 +4,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 //Components
 
-import landingPage from '@/views/landingPage/landingPage.vue'
-import adminPage from '@/views/adminPage/adminPage.vue'
-import addStudents from '@/views/adminPage/addStudents/addStudents.vue';
+import landingPage from '@/views/landingPage/landingPage.vue';
+import AdminDashboard from '@/views/adminPage/adminDashboard.vue';
+import addDepartments from '@/views/adminPage/addDepartments/addDepartments.vue';
 import showReport from '@/views/showReport/showReport.vue';
 import studentDashboard from '@/views/studentDashboard/studentDashboard.vue';
 import MentorDashboard from '@/views/mentorDashboard/mentorDashboard.vue';
 import SplLabDashboard from '@/views/splLabDashboard/splLabDashboard.vue';
-import AdminDashboard from '@/views/adminPage/adminDashboard.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,19 +21,14 @@ const router = createRouter({
       component: landingPage
     },
     {
-      path: "/admin",
-      name: "Admin",
-      component: adminPage
-    },
-    {
       path: "/adminDashboard",
       name: "Admin Dashboard",
       component: AdminDashboard
     },
     {
       path: "/adminDashboard/:year",
-      name: "Add Students",
-      component: addStudents
+      name: "Add Departments",
+      component: addDepartments
     },
     {
       path: "/admin/report/:year",

@@ -8,6 +8,7 @@ import dbConnect from './config/db.js';
 
 import auth from './routes/auth.js';
 import batch from './routes/batch.js';
+import department from './routes/department.js';
 
 const app = express();
 
@@ -18,6 +19,7 @@ dbConnect();
 
 app.use('/api/auth', auth);
 app.use('/batch', batch);
+app.use('/department', department);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
