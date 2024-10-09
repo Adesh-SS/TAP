@@ -26,7 +26,7 @@ const router = createRouter({
       component: AdminDashboard
     },
     {
-      path: "/adminDashboard/:year",
+      path: "/adminDashboard/:batchName",
       name: "Add Departments",
       component: addDepartments
     },

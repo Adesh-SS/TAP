@@ -161,7 +161,7 @@ export default{
         }
 
         const handleNavigateToBatch = (name: string) => {
-            router.push({ name: 'Add Departments', params: { year: name } });
+            router.push({ name: 'Add Departments', params: { batchName: name } });
         }
 
         onMounted(() => {

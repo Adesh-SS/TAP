@@ -14,13 +14,13 @@ const router = express.Router();
 router.post('/addDepartment', async (req, res) => {
     try {
         const { error } = validateDepartment(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
+        if (error) return res.status(400).send({ message: error.details[0].message });
 
-        const existingDepartment = await Department.findOne({ name: req.body.name });
-        if (existingDepartment) return res.status(400).send('Department with this name already exists');
+        const existingDepartment = await Department.findOne({ name: req.body.name, batchName: req.body.batchName });
+        if (existingDepartment) return res.status(400).send({ message: 'Department with this name already exists in the same batch' });
 
         const batch = await Batch.findOne({ name: req.body.batchName });
-        if (!batch) return res.status(404).send('Batch not found');
+        if (!batch) return res.status(404).send({ message: 'Batch not found' });
 
         const department = new Department({
             name: req.body.name,
@@ -33,11 +33,50 @@ router.post('/addDepartment', async (req, res) => {
 
         await batch.save();
 
-        res.status(200).send('Department added successfully');
+        res.status(200).send({ message: 'Department added successfully' });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
+
+//route: Get All Departments
+
+router.get('/getDepartments/:batchName', async (req, res) => {
+    try {
+        const batch = await Batch.findOne({ name: req.params.batchName }).populate('departments');
+        if (!batch) return res.status(404).send('Batch not found');
+
+        res.status(200).send(batch.departments);
 
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+//route: delete department by name
+
+router.delete('/deleteDepartment/:batchName/:name', async (req, res) => {
+    try {
+        const { batchName, name } = req.params;
+
+        const department = await Department.findOneAndDelete({ name, batchName });
+        if (!department) return res.status(404).send({ message: 'Department not found in the specified batch' });
+
+        const batch = await Batch.findOne({ name: batchName });
+        if (!batch) return res.status(404).send({ message: 'Batch not found' });
+
+        batch.departments = batch.departments.filter(dep => dep.toString() !== department._id.toString());
+
+        await batch.save();
+
+        res.status(200).send({ message: 'Department deleted successfully' });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: 'Internal Server Error' });
     }
 });
 
