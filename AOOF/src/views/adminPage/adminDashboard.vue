@@ -298,10 +298,30 @@ export default{
           }
         };
 
+        const fetchMentors = async() => {
+            try {
+                const response = await axios.get('http://localhost:5000/mentor/getMentors');
+                const mentorsData = response.data.map((mentor: Mentor) => ({
+                    mentorId: mentor.mentorId,
+                    mentorName: mentor.mentorName,
+                    mentorEmail: mentor.mentorEmail
+                }));
+
+                mentors.value.push(...mentorsData);
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
+        }
+
         onMounted(() => {
             chartData.value = setChartData();
             chartOptions.value = setChartOptions();
             fetchBranches();
+            fetchMentors();
         });
         
        return {
@@ -677,7 +697,28 @@ export default{
                                         </Dialog>
                                     </div>
                                     
-                                    <div :class="styles.adminPage_addUsers_main_content_bottom"></div>
+                                    <div :class="styles.adminPage_addUsers_main_content_bottom">
+                                        <div
+                                            :class="styles.adminPage_mentor_display_container"
+                                            v-for="(mentor, index) in mentors"
+                                        >
+                                            <div :class="styles.adminPage_mentor_display_container_index">
+                                                <h1>{{ index + 1 }}</h1>
+                                            </div>
+                                            <div :class="styles.adminPage_mentor_display_container_id">
+                                                <h1>{{ mentor.mentorId }}</h1>
+                                            </div>
+                                            <div :class="styles.adminPage_mentor_display_container_name">
+                                                <h1>{{ mentor.mentorName }}</h1>
+                                            </div>
+                                            <div :class="styles.adminPage_mentor_display_container_students">
+                                                <button>Students</button>
+                                            </div>
+                                            <div :class="styles.adminPage_mentor_display_container_delete">
+                                                <i class="pi pi-trash"></i>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div v-else-if="addUserTab === 'pic'">

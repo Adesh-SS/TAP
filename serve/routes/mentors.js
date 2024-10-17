@@ -39,4 +39,14 @@ router.post('/addMentor', async (req, res) => {
     }
 });
 
+router.get('/getMentors', async (req, res) => {
+    try {
+        const mentors = await Mentor.find();
+        res.status(200).send(mentors);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 export default router;
