@@ -296,7 +296,7 @@ export default{
           } else {
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select a file', life: 2000 });
           }
-        };
+        }
 
         const fetchMentors = async() => {
             try {
@@ -308,6 +308,23 @@ export default{
                 }));
 
                 mentors.value.push(...mentorsData);
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
+        }
+
+        const handleDeleteMentor = async(mentorId: string) => {
+            try {
+                const response = await axios.delete(`http://localhost:5000/mentor/deleteMentor/${mentorId}`);
+
+                if(response.status === 200){
+                    mentors.value = mentors.value.filter((mentor) => mentor.mentorId !== mentorId);
+                    toast.add({severity:'success', summary: 'Success', detail: 'Mentor deleted successfully', life: 2000});
+                }
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response) {
                     toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
@@ -351,7 +368,8 @@ export default{
         handleAddMentorByMail,
         downloadMentorCSV,
         handleMentorCSVUpload,
-        mentorFileName
+        mentorFileName,
+        handleDeleteMentor
        } 
     }
 }
@@ -553,6 +571,7 @@ export default{
 
                                 <div v-else-if="addUserTab === 'mentors'">
                                     <div :class="styles.adminPage_addUsers_main_content_top">
+                                        <div :class="styles.adminPage_addUsers_main_content_top_left"></div>
                                         <button @click="addMentorModel = !addMentorModel">
                                             <i class="pi pi-plus-circle"></i>
                                             Mentors
@@ -644,7 +663,10 @@ export default{
                                                                 <h1>{{ mentor.mentorEmail }}</h1>
                                                             </div>
                                                             <div :class="styles.adminPage_addUsers_mentor_delete_container">
-                                                                <i class="pi pi-trash"></i>
+                                                                <i 
+                                                                    class="pi pi-trash"
+                                                                    @click="handleDeleteMentor(mentor.mentorId)"
+                                                                ></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -715,7 +737,10 @@ export default{
                                                 <button>Students</button>
                                             </div>
                                             <div :class="styles.adminPage_mentor_display_container_delete">
-                                                <i class="pi pi-trash"></i>
+                                                <i 
+                                                    class="pi pi-trash"
+                                                    @click="handleDeleteMentor(mentor.mentorId)"
+                                                ></i>
                                             </div>
                                         </div>
                                     </div>

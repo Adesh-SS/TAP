@@ -49,4 +49,22 @@ router.get('/getMentors', async (req, res) => {
     }
 });
 
+router.delete('/deleteMentor/:mentorId', async(req, res) => {
+    try {
+        const mentorId = req.params.mentorId;
+        const mentor = await Mentor.findOneAndDelete({ mentorId: mentorId });
+        if (!mentor) return res.status(404).send('Mentor not found');
+
+        await Admin.updateMany(
+            {},
+            { $pull: { mentors: mentor._id } }
+        );
+
+        res.status(200).send('Mentor Deleted');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 export default router;
