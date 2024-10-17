@@ -2,7 +2,7 @@
 
 //dependencies
 
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
@@ -11,14 +11,18 @@ import Toast from 'primevue/toast';
 //styles
 
 import styles from './addDepartments.module.css';
-import StyleClass from 'primevue/styleclass';
-import type { overflow } from 'html2canvas/dist/types/css/property-descriptors/overflow';
 
 //interfaces
 
 interface Department {
     name: string;
     studentsCount: number;
+}
+
+interface Student {
+    name: string;
+    email: string;
+    rollNo: string;
 }
 
 //exports
@@ -38,6 +42,15 @@ export default {
     const toast = useToast();
     const addStudentsModal = ref<boolean>(false);
     const tabClicked = ref<string>('byMail');
+    const students = ref<Student[]>([]);
+    const student = reactive<Student>({
+        name: '',
+        email: '',
+        rollNo: ''
+    });
+    const emailRegex = /^[a-z]+\.([a-z]{2})[0-9]{2}@bitsathy\.ac\.in$/;
+    const rollNoRegex = /^[0-9]{5}[0-9]{2}[A-Z]{2}[0-9]{3}$/;
+    const presentDepartmentName = ref<string>('');
 
     //functions
 
@@ -109,6 +122,36 @@ export default {
         }
     }
 
+    const selectDepartment = (name: string) => {
+        addStudentsModal.value = true;
+        presentDepartmentName.value = name;
+    }
+
+    const deselectDepartment = () => {
+        presentDepartmentName.value = '';
+        addStudentsModal.value = false;
+    };
+
+    const handleAddStudents = () => {
+        if (student.name && student.email && student.rollNo) {
+            if (!emailRegex.test(student.email)) {
+                toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid email format. Expected format:x.db@bitsathy.ac.in', life: 2000 });
+                return;
+            }
+            if (!rollNoRegex.test(student.rollNo)) {
+                toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid roll number format. Expected format: 73762xxddnnn', life: 2000 });
+                return;
+            }
+            const batchName = route.params.batchName;
+            const departmentName = presentDepartmentName
+            students.value.push({ ...student });
+            student.name = '';
+            student.email = '';
+            student.rollNo = '';
+        }
+        console.log(students);
+    };
+
     onMounted(() => {
       handleGetAllDepartments();
     });
@@ -122,7 +165,12 @@ export default {
       departments,
       handleDeleteDepartment,
       addStudentsModal,
-      tabClicked
+      tabClicked,
+      students,
+      student,
+      handleAddStudents,
+      selectDepartment,
+      deselectDepartment
     }
   }
 }
@@ -195,7 +243,7 @@ export default {
                         <h1>{{ department.studentsCount }}</h1>
                     </div>
                     <div :class="styles.addDepartments_main_department_container_bottom_right">
-                        <button @click="addStudentsModal = !addStudentsModal">Students</button>
+                        <button @click="selectDepartment(department.name)">Students</button>
                         <i class="pi pi-trash" @click="handleDeleteDepartment(department.name)"></i>
                     </div>
                     <Dialog
@@ -207,6 +255,7 @@ export default {
                         :closable="true"
                         :showHeader="true"
                         :style="{width: '70vw', height: '90vh'}"
+                        @close="deselectDepartment"
                     >
                         <div :class="styles.addDepartments_main_students_inside">
                             <div :class="styles.addDepartments_main_students_inside_tabs_container">
@@ -236,6 +285,8 @@ export default {
                                             name="studentName" 
                                             autocomplete="off" 
                                             :class="styles.input"
+                                            v-model="student.name"
+                                            @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Name</label>
                                     </div>
@@ -246,6 +297,8 @@ export default {
                                             name="studentEmail" 
                                             autocomplete="off" 
                                             :class="styles.input"
+                                            v-model="student.email"
+                                            @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Email</label>
                                     </div>
@@ -256,23 +309,29 @@ export default {
                                             name="studentRollNo" 
                                             autocomplete="off" 
                                             :class="styles.input"
+                                            v-model="student.rollNo"
+                                            @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Roll No</label>
                                     </div>
                                 </div>
                                 <div :class="styles.addDepartments_main_students_inside_mail_main_container">
-                                    <div :class="styles.addDepartments_main_students_inside_student_container">
+                                    <div 
+                                        :class="styles.addDepartments_main_students_inside_student_container"
+                                        v-for="(student, index) in students"
+                                        :key="index"
+                                    >
                                         <div :class="styles.addDepartments_main_students_inside_student_container_slno">
-                                            <h1>000</h1>
+                                            <h1>{{ index+1 }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_name">
-                                            <h1>Mankalasheri Neelakandan Karthikeyan</h1>
+                                            <h1>{{ student.name }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_roll">
-                                            <h1>7373222XXNNN</h1>
+                                            <h1>{{ student.rollNo }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_email">
-                                            <h1>mnkarthikeyan@bitsathy.ac.in</h1>
+                                            <h1>{{ student.email }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_button">
                                             <i class="pi pi-trash"></i>

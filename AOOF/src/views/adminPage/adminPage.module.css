@@ -650,3 +650,301 @@
     cursor: pointer;
     background: none;
 }
+
+.adminPage_addUsers_mentor_modal_inside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 65vh;
+    width: 66vw;
+}
+
+.adminPage_addUsers_mentor_modal_inside_tabs_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 5vh;
+    width: 100%;
+}
+
+.adminPage_addUsers_mentor_modal_inside_tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 12vw;
+    margin-right: 1vw;
+    border-radius: 1em 1em 0 0;
+    cursor: pointer;
+    transition: border-bottom 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.adminPage_addUsers_mentor_modal_inside_tabs h1 {
+    color: var(--text);
+    font-size: 1em;
+    letter-spacing: .1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_mentor_modal_inside_selected_tabs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 12vw;
+    margin-right: 1vw;
+    border-radius: 1em 1em 0 0;
+    cursor: pointer;
+    border-bottom: 1px solid var(--accent);
+    transition: border-bottom 0.3s ease-in-out, transform 0.3s ease-in-out;
+    transform: translateX(0);
+}
+
+.adminPage_addUsers_mentor_modal_inside_selected_tabs h1 {
+    color: var(--text);
+    font-size: 1em;
+    letter-spacing: .1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_mentor_modal_inside_content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 60vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.adminPage_addUsers_mentor_modal_inside_content_top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 10vh;
+    width: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_mentor_modal_inside_content_bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 50vh;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.adminPage_addUsers_mentor_modal_inside_mentor_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 6vh;
+    width: 100%;
+    margin: 1vh 0 1vh 0;
+    border-radius: .5em;
+    background: var(--secondary);
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_mentor_index_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 6vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+    border-radius: .5em 0 0 .5em;
+}
+
+.adminPage_addUsers_mentor_index_container h1 {
+    color: var(--text);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_mentor_id_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 12vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_mentor_id_container h1 {
+    color: var(--text);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_mentor_name_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 22vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_mentor_name_container h1 {
+    color: var(--text);
+    font-size: 1em;
+    font-weight: 400;
+    text-align: center;
+}
+
+.adminPage_addUsers_mentor_email_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 20vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+}
+
+.adminPage_addUsers_mentor_email_container h1 {
+    color: var(--text);
+    font-size: 1em;
+    font-weight: 400;
+}
+
+.adminPage_addUsers_mentor_delete_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 5vw;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: auto;
+    border-radius: 0 .5em .5em 0;
+    cursor: pointer;
+}
+
+.adminPage_addUsers_mentor_CSV_top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    height: 10%;
+    margin: 1vh 0 1vh 0;
+}
+  
+.adminPage_addUsers_mentor_CSV_top button {
+    height: 5vh;
+    width: 15vw;
+    background: var(--primary);
+    color: var(--background);
+    font-size: 1em;
+    border: none;
+    border-radius: .5em;
+    margin: 0 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+  
+.adminPage_addUsers_mentor_CSV_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80%;
+    margin: 1vh 0 1vh 0;
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form {
+    height: 40vh;
+    width: 30vw;
+    border-radius: 1em;
+    box-shadow: 4px 4px 30px rgba(0, 0, 0, .2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 5px;
+    background-color: rgba(0, 110, 255, 0.041);
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_header {
+    flex: 1;
+    width: 100%;
+    border: 2px dashed var(--accent);
+    border-radius: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_header svg {
+    height: 100px;
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_header p {
+    text-align: center;
+    color: black;
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_footer {
+    background-color: rgba(0, 110, 255, 0.075);
+    width: 100%;
+    height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: black;
+    border: none;
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_footer svg {
+    height: 130%;
+    fill: var(--accent);
+    background-color: rgba(70, 66, 66, 0.103);
+    border-radius: 50%;
+    padding: 2px;
+    cursor: pointer;
+    box-shadow: 0 2px 30px rgba(0, 0, 0, 0.205);
+}
+  
+.adminPage_addUsers_mentor_CSV_main_form_footer p {
+    flex: 1;
+    text-align: center;
+}
+  
+.file {
+    display: none;
+}
