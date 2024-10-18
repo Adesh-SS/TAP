@@ -20,9 +20,10 @@ interface Department {
 }
 
 interface Student {
-    name: string;
-    email: string;
-    rollNo: string;
+    studentId: string;
+    studentName: string;
+    studentEmail: string;
+    mentorId: string;
 }
 
 //exports
@@ -44,9 +45,10 @@ export default {
     const tabClicked = ref<string>('byMail');
     const students = ref<Student[]>([]);
     const student = reactive<Student>({
-        name: '',
-        email: '',
-        rollNo: ''
+        studentId: '',
+        studentName: '',
+        studentEmail: '',
+        mentorId: ''
     });
     const emailRegex = /^[a-z]+\.([a-z]{2})[0-9]{2}@bitsathy\.ac\.in$/;
     const rollNoRegex = /^[0-9]{5}[0-9]{2}[A-Z]{2}[0-9]{3}$/;
@@ -133,21 +135,22 @@ export default {
     };
 
     const handleAddStudents = () => {
-        if (student.name && student.email && student.rollNo) {
-            if (!emailRegex.test(student.email)) {
+        if (student.studentId && student.studentName && student.studentEmail && student.mentorId) {
+            if (!emailRegex.test(student.studentEmail)) {
                 toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid email format. Expected format:x.db@bitsathy.ac.in', life: 2000 });
                 return;
             }
-            if (!rollNoRegex.test(student.rollNo)) {
+            if (!rollNoRegex.test(student.studentId)) {
                 toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid roll number format. Expected format: 73762xxddnnn', life: 2000 });
                 return;
             }
             const batchName = route.params.batchName;
             const departmentName = presentDepartmentName
             students.value.push({ ...student });
-            student.name = '';
-            student.email = '';
-            student.rollNo = '';
+            student.studentName = '';
+            student.studentEmail = '';
+            student.studentId = '';
+            student.mentorId = '';
         }
         console.log(students);
     };
@@ -254,7 +257,7 @@ export default {
                         :modal="true"
                         :closable="true"
                         :showHeader="true"
-                        :style="{width: '70vw', height: '90vh'}"
+                        :style="{width: '80vw', height: '90vh'}"
                         @close="deselectDepartment"
                     >
                         <div :class="styles.addDepartments_main_students_inside">
@@ -285,7 +288,7 @@ export default {
                                             name="studentName" 
                                             autocomplete="off" 
                                             :class="styles.input"
-                                            v-model="student.name"
+                                            v-model="student.studentName"
                                             @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Name</label>
@@ -297,7 +300,7 @@ export default {
                                             name="studentEmail" 
                                             autocomplete="off" 
                                             :class="styles.input"
-                                            v-model="student.email"
+                                            v-model="student.studentEmail"
                                             @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Email</label>
@@ -309,10 +312,22 @@ export default {
                                             name="studentRollNo" 
                                             autocomplete="off" 
                                             :class="styles.input"
-                                            v-model="student.rollNo"
+                                            v-model="student.studentId"
                                             @keyup.enter="handleAddStudents"
                                         >
                                         <label :class="styles.user_label">Roll No</label>
+                                    </div>
+                                    <div :class="styles.input_group">
+                                        <input 
+                                            required 
+                                            type="text" 
+                                            name="mentorId" 
+                                            autocomplete="off" 
+                                            :class="styles.input"
+                                            v-model="student.mentorId"
+                                            @keyup.enter="handleAddStudents"
+                                        >
+                                        <label :class="styles.user_label">Mentor ID</label>
                                     </div>
                                 </div>
                                 <div :class="styles.addDepartments_main_students_inside_mail_main_container">
@@ -325,13 +340,13 @@ export default {
                                             <h1>{{ index+1 }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_name">
-                                            <h1>{{ student.name }}</h1>
+                                            <h1>{{ student.studentName }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_roll">
-                                            <h1>{{ student.rollNo }}</h1>
+                                            <h1>{{ student.studentId }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_email">
-                                            <h1>{{ student.email }}</h1>
+                                            <h1>{{ student.studentEmail }}</h1>
                                         </div>
                                         <div :class="styles.addDepartments_main_students_inside_student_container_button">
                                             <i class="pi pi-trash"></i>

@@ -54,7 +54,7 @@ export default{
         const sideBarSelected = ref<string>('addressBook');
         const value = ref<string>("");
         const items = ref<string[]>([]);
-        const addUserTab = ref<string>('mentors');
+        const addUserTab = ref<string>('students');
         const batches = ref<Batch[]>([]);
         const addBatchModel = ref<boolean>(false);
         const toast = useToast();
@@ -502,6 +502,7 @@ export default{
 
                                 <div v-if="addUserTab === 'students'">
                                     <div :class="styles.adminPage_addUsers_main_content_top">
+                                        <div :class="styles.adminPage_addUsers_main_content_top_left"></div>
                                         <button @click="addBatchModel = !addBatchModel">
                                             <i class="pi pi-plus-circle"></i>
                                             Batch

@@ -21,10 +21,14 @@ router.post('/addMentor', async (req, res) => {
     const admin = await Admin.findOne();
     if (!admin) return res.status(404).send('Admin not found');
 
+    const lastFourDigits = req.body.mentorId.slice(-4);
+    const mentorPassword = `${req.body.mentorName}@${lastFourDigits}`;
+
     const mentor = new Mentor({
         mentorId: req.body.mentorId,
         mentorName: req.body.mentorName,
-        mentorEmail: req.body.mentorEmail
+        mentorEmail: req.body.mentorEmail,
+        mentorPassword: mentorPassword
     });
 
     try {
@@ -41,7 +45,7 @@ router.post('/addMentor', async (req, res) => {
 
 router.get('/getMentors', async (req, res) => {
     try {
-        const mentors = await Mentor.find();
+        const mentors = await Mentor.find({}, 'mentorId mentorName students');
         res.status(200).send(mentors);
     } catch (error) {
         console.log(error);
