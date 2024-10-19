@@ -134,26 +134,65 @@ export default {
         addStudentsModal.value = false;
     };
 
-    const handleAddStudents = () => {
-        if (student.studentId && student.studentName && student.studentEmail && student.mentorId) {
-            if (!emailRegex.test(student.studentEmail)) {
-                toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid email format. Expected format:x.db@bitsathy.ac.in', life: 2000 });
+    const handleAddStudentsByMail = async(event: Event) => {
+        event.preventDefault();
+
+        const studentId = student.studentId;
+        const studentName = student.studentName;
+        const studentEmail = student.studentEmail;
+        const mentorId = student.mentorId;
+
+        if(studentId && studentName && studentEmail && mentorId){
+            if(!emailRegex.test(studentEmail)){
+                toast.add({ severity: 'error', summary: 'Error', 
+                detail: 'Invalid email format. Expected format: sample.dd22@bitsathy.ac.in"',
+                life: 2000 });
                 return;
             }
-            if (!rollNoRegex.test(student.studentId)) {
-                toast.add({ severity: 'error', summary: 'Error', detail: 'Invalid roll number format. Expected format: 73762xxddnnn', life: 2000 });
+            if(!rollNoRegex.test(studentId)){
+                toast.add({ severity: 'error', summary: 'Error', 
+                detail: 'Invalid roll number format. Expected format: 73762xxddnnn',
+                life: 2000 });
                 return;
             }
-            const batchName = route.params.batchName;
-            const departmentName = presentDepartmentName
-            students.value.push({ ...student });
-            student.studentName = '';
-            student.studentEmail = '';
-            student.studentId = '';
-            student.mentorId = '';
+
+            const batch = route.params.batchName;
+            const department = presentDepartmentName.value;
+
+            try {
+                const response = await axios.post('http://localhost:5000/student/addStudent', {
+                    studentId,
+                    studentName,
+                    studentEmail,
+                    department,
+                    batch,
+                    mentorId
+                });
+
+                if(response.status === 200){
+                    const newStudent = {
+                        studentId,
+                        studentName,
+                        studentEmail,
+                        mentorId
+                    }
+                    students.value.push(newStudent);
+                    toast.add({ severity: 'success', summary: 'Success', detail: 'Student added successfully', life: 2000 });
+                }
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
         }
-        console.log(students);
-    };
+
+        student.studentName = '';
+        student.studentEmail = '';
+        student.studentId = '';
+        student.mentorId = '';
+    }
 
     onMounted(() => {
       handleGetAllDepartments();
@@ -171,7 +210,7 @@ export default {
       tabClicked,
       students,
       student,
-      handleAddStudents,
+      handleAddStudentsByMail,
       selectDepartment,
       deselectDepartment
     }
@@ -289,7 +328,7 @@ export default {
                                             autocomplete="off" 
                                             :class="styles.input"
                                             v-model="student.studentName"
-                                            @keyup.enter="handleAddStudents"
+                                            @keyup.enter="handleAddStudentsByMail"
                                         >
                                         <label :class="styles.user_label">Name</label>
                                     </div>
@@ -301,7 +340,7 @@ export default {
                                             autocomplete="off" 
                                             :class="styles.input"
                                             v-model="student.studentEmail"
-                                            @keyup.enter="handleAddStudents"
+                                            @keyup.enter="handleAddStudentsByMail"
                                         >
                                         <label :class="styles.user_label">Email</label>
                                     </div>
@@ -313,7 +352,7 @@ export default {
                                             autocomplete="off" 
                                             :class="styles.input"
                                             v-model="student.studentId"
-                                            @keyup.enter="handleAddStudents"
+                                            @keyup.enter="handleAddStudentsByMail"
                                         >
                                         <label :class="styles.user_label">Roll No</label>
                                     </div>
@@ -325,7 +364,7 @@ export default {
                                             autocomplete="off" 
                                             :class="styles.input"
                                             v-model="student.mentorId"
-                                            @keyup.enter="handleAddStudents"
+                                            @keyup.enter="handleAddStudentsByMail"
                                         >
                                         <label :class="styles.user_label">Mentor ID</label>
                                     </div>

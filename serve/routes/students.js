@@ -13,7 +13,7 @@ import { Mentor } from '../models/mentors/addMentors.js';
 
 const router = express.Router();
 
-//Routes
+//Routes: Add Students
 
 router.post('/addStudent', async (req, res) => {
     const { error } = validateStudent(req.body);
