@@ -6,6 +6,7 @@ import express from 'express';
 
 import { Department, validateDepartment } from '../models/department/addDepartments.js';
 import { Batch } from '../models/batches/addBatches.js';
+import { Student } from '../models/students/addStudents.js';
 
 const router = express.Router();
 
@@ -77,6 +78,26 @@ router.delete('/deleteDepartment/:batchName/:name', async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
+
+//route: Get students in studentsIds field
+
+router.get('/getStudents/:batchName/:departmentName', async (req, res) => {
+    try {
+      const { batchName, departmentName } = req.params;
+      const department = await Department.findOne({ batchName, name: departmentName });
+  
+      if (!department) {
+        return res.status(404).json({ message: 'Department not found' });
+      }
+  
+      const studentsIds = department.studentsIds;
+      const students = await Student.find({ _id: { $in: studentsIds } }, 'studentId studentName studentEmail');
+  
+      res.status(200).json(students);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error', error });
     }
 });
 
