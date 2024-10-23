@@ -2,7 +2,7 @@
 
 //dependencies
 
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import axios from 'axios';
 import { useToast } from 'primevue/usetoast';
@@ -149,6 +149,12 @@ export default {
         presentDepartmentName.value = '';
         addStudentsModal.value = false;
     };
+
+    watch(addStudentsModal, (newValue) => {
+      if (!newValue) {
+        window.location.reload();
+      }
+    });
 
     const handleAddStudentsByMail = async(event: Event) => {
         event.preventDefault();

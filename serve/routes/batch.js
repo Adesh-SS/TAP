@@ -6,6 +6,8 @@ import express from 'express';
 
 import { Batch, validateBatch } from '../models/batches/addBatches.js';
 import { Admin } from '../models/for_login/admin.js';
+import { Student } from '../models/students/addStudents.js';
+import { Department } from '../models/department/addDepartments.js';
 
 const router = express.Router();
 
