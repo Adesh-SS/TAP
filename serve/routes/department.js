@@ -73,6 +73,11 @@ router.delete('/deleteDepartment/:batchName/:name', async (req, res) => {
 
         await batch.save();
 
+        const deletedStudents = await Student.deleteMany({ department: department._id });
+
+        batch.studentsCount -= deletedStudents.deletedCount;
+        await batch.save();
+
         res.status(200).send({ message: 'Department deleted successfully' });
 
     } catch (error) {
