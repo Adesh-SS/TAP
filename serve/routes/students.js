@@ -62,8 +62,6 @@ router.post('/addStudent', async (req, res) => {
     await mentor.save();
 
     department.studentsIds.push(student._id);
-    await department.save();
-
     department.studentsCount += 1;
     await department.save();
 
@@ -98,7 +96,7 @@ router.delete('/deleteStudent/:batch/:department/:studentId', async (req, res) =
     department.studentsCount -= 1;
     await department.save();
 
-    batch.studentsCount -= 1;
+    batch.studentsCount = batch.studentsCount - 1;
     await batch.save();
 
     await Student.deleteOne({ studentId: req.params.studentId });

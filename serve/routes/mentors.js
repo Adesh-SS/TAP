@@ -45,7 +45,7 @@ router.post('/addMentor', async (req, res) => {
 
 router.get('/getMentors', async (req, res) => {
     try {
-        const mentors = await Mentor.find({}, 'mentorId mentorName students');
+        const mentors = await Mentor.find({}, 'mentorId mentorName mentorEmail students');
         res.status(200).send(mentors);
     } catch (error) {
         console.log(error);

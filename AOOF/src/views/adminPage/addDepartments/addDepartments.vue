@@ -148,7 +148,6 @@ export default {
     const deselectDepartment = () => {
         presentDepartmentName.value = '';
         addStudentsModal.value = false;
-        window.location.reload();
     };
 
     const handleAddStudentsByMail = async(event: Event) => {
@@ -229,7 +228,7 @@ export default {
 
         const generateStudentEmail = (name: string, department: string) => {
             const emailName = name.split(' ')[0].toLowerCase();
-            const year = Math.random() < 0.5 ? '22' : '23';
+            const year = '22';
             return `${emailName}.${department.toLowerCase()}${year}@bitsathy.ac.in`;
         };
 
@@ -238,7 +237,7 @@ export default {
             const department = 'AL';
             const studentId = generateStudentId();
             const studentEmail = generateStudentEmail(studentName, department);
-            const mentorId = 'M0987';
+            const mentorId = 'M0001';
             rows.push([studentId, studentName, studentEmail, mentorId]);
         }
 
@@ -254,16 +253,16 @@ export default {
         document.body.removeChild(link);
     }
 
-    const handleAddStudentsByCSV = async(event: Event) => {
+    const handleAddStudentsByCSV = async (event: Event) => {
         const input = event.target as HTMLInputElement;
         const file = input.files?.[0];
-
-        if(file){
+    
+        if (file) {
             studentFileName.value = file.name;
-
+    
             Papa.parse(file, {
                 header: true,
-                complete: (result: ParseResult<Student>) => {
+                complete: async (result: ParseResult<Student>) => {
                     const studentCSV = result.data
                         .filter((student: Student) => student.studentId && student.studentName && student.studentEmail && student.mentorId)
                         .map((student: Student) => ({
@@ -272,28 +271,30 @@ export default {
                             studentEmail: student.studentEmail,
                             mentorId: student.mentorId
                         }));
-                    
-                    studentCSV.forEach((student: Student) => {
-                        axios.post('http://localhost:5000/student/addStudent', {
-                            studentId: student.studentId,
-                            studentName: student.studentName,
-                            studentEmail: student.studentEmail,
-                            department: presentDepartmentName.value,
-                            batch: route.params.batchName,
-                            mentorId: student.mentorId
-                        }).then(response => {
-                            if(response.status === 200){
+    
+                    for (const student of studentCSV) {
+                        try {
+                            const response = await axios.post('http://localhost:5000/student/addStudent', {
+                                studentId: student.studentId,
+                                studentName: student.studentName,
+                                studentEmail: student.studentEmail,
+                                department: presentDepartmentName.value,
+                                batch: route.params.batchName,
+                                mentorId: student.mentorId
+                            });
+    
+                            if (response.status === 200) {
                                 students.value.push(student);
+                                toast.add({ severity: 'success', summary: 'Success', detail: 'Student added successfully', life: 2000 });
                             }
-                        }).catch(error => {
+                        } catch (error) {
                             if (axios.isAxiosError(error) && error.response) {
                                 toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
                             } else {
                                 toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
                             }
-                        });
-                        toast.add({ severity: 'success', summary: 'Success', detail: 'Students added successfully', life: 2000 });
-                    });
+                        }
+                    }
                 },
                 error: (error: Error) => {
                     toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
@@ -302,7 +303,7 @@ export default {
         } else {
             toast.add({ severity: 'error', summary: 'Error', detail: 'No file selected', life: 2000 });
         }
-    }
+    };
 
     const fetchStudents = async() => {
         const batchName = route.params.batchName;
