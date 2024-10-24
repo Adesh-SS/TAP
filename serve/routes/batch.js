@@ -60,15 +60,31 @@ router.get('/getBatches', async (req, res) => {
 
 router.delete('/deleteBatch/:name', async (req, res) => {
     try {
-        const batch = await Batch.findOneAndDelete({ name: req.params.name });
+        const batch = await Batch.findOne({ name: req.params.name });
         if (!batch) return res.status(404).send('Batch not found');
+
+        if (batch.departments && batch.departments.length > 0) {
+            for (const departmentId of batch.departments) {
+                const department = await Department.findById(departmentId);
+                if (department) {
+
+                    if (department.studentsIds && department.studentsIds.length > 0) {
+                        await Student.deleteMany({ _id: { $in: department.studentsIds } });
+                    }
+                    // Delete the department
+                    await Department.findByIdAndDelete(departmentId);
+                }
+            }
+        }
+
+        await Batch.findOneAndDelete({ name: req.params.name });
 
         await Admin.updateMany(
             { batches: batch._id },
             { $pull: { batches: batch._id } }
         );
 
-        res.status(200).send('Batch deleted successfully');
+        res.status(200).send('Batch and related references deleted successfully');
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');
