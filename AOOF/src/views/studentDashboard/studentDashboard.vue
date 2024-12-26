@@ -114,6 +114,13 @@ const handleViewModalToggle = (index: number) => {
     viewOdModal.value[index] = !viewOdModal.value[index];
 };
 
+const handleLogout = () => {
+  localStorage.removeItem('inutile');
+  localStorage.removeItem('auth');
+
+  window.location.reload();
+};
+
 export default {
   setup() {
 
@@ -131,7 +138,8 @@ export default {
         groupedTypes,
         buttondisplay,
         endDateDisplay,
-        description
+        description,
+        handleLogout
     };
   }
 };
@@ -166,7 +174,7 @@ export default {
                 </div>
                 <div 
                     :class="sideBarSelected === 'Logout' ? styles.studentDashboard_sidebar_icon_focus_container : styles.studentDashboard_sidebar_icon_container"
-                    @click="sideBarSelected = 'Logout'"
+                    @click="handleLogout"
                 >
                     <i class="pi pi-sign-out"></i>
                 </div>

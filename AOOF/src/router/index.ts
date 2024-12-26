@@ -37,7 +37,7 @@ const router = createRouter({
     },
     {
       path: "/student",
-      name: "Student",
+      name: "Student Dashboard",
       component: studentDashboard
     },
     {

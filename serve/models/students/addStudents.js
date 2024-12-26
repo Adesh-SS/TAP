@@ -2,6 +2,10 @@
 
 import mongoose, { mongo, Mongoose } from 'mongoose';
 import Joi from 'joi';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 //Schema
 
@@ -37,8 +41,42 @@ const studentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mentor',
         required: true
+    },
+    odApplied: {
+        type: Number,
+        default: 0
+    },
+    odApproved: {
+        type: Number,
+        default: 0
+    },
+    odRejected: {
+        type: Number,
+        default: 0
+    },
+    appliedOdList: {
+        type: Array,
+        default: []
+    },
+    approvedOdList: {
+        type: Array,
+        default: []
+    },
+    rejectedOdList: {
+        type: Array,
+        default: []
+    },
+    role: {
+        type: String,
+        default: 'Student'
     }
+
 });
+
+studentSchema.methods.generateAuthToken = function() {
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.JWT_SECRET);
+    return token;
+};
 
 const Student = mongoose.model('Student', studentSchema);
 
@@ -57,5 +95,14 @@ function validateStudent(student) {
     return schema.validate(student);
 }
 
-export { Student, validateStudent };
+function validateStudentLogin(student) {
+    const schema = Joi.object({
+        studentId: Joi.string().required(),
+        studentPassword: Joi.string().required()
+    });
+
+    return schema.validate(student);
+}
+
+export { Student, validateStudent, validateStudentLogin };
 export default Student;

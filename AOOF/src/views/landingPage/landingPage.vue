@@ -54,6 +54,10 @@ const handleLogin = async () => {
       if(response.data.role === 'Admin'){
         router.push({name: 'Admin Dashboard'});
       }
+
+      if(response.data.role === 'Student'){
+        router.push({name: 'Student Dashboard'})
+      }
     } else {
       toast.add({severity:'error', summary: 'Error', detail: 'Login failed', life: 2000});
     }

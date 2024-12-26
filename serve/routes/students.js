@@ -1,6 +1,8 @@
 //import: Dependencies
 
 import express from 'express';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
 //import: Models
 
@@ -12,6 +14,7 @@ import { Mentor } from '../models/mentors/addMentors.js';
 //Router
 
 const router = express.Router();
+dotenv.config();
 
 //Routes: Add Students
 
@@ -45,12 +48,14 @@ router.post('/addStudent', async (req, res) => {
     const idSuffix = roll.slice(-3);
 
     const password = `${username}@${idSuffix}`;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const student = new Student({
         studentId: req.body.studentId,
         studentName: req.body.studentName,
         studentEmail: req.body.studentEmail,
-        studentPassword: password,
+        studentPassword: hashedPassword,
         department: department._id,
         batch: batch._id,
         mentorId: mentor._id
