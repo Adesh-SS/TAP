@@ -195,7 +195,7 @@ export default {
               :visible="addEventDetails"
               @update:visible="handleModalToggle"
               :modal="true"
-              header="Add Students"
+              header="Add OD"
               :style="{ width: '70vw', height: '80vh'}"
             >
                 <div :class="styles.studentDashboard_modalContent">
@@ -237,6 +237,14 @@ export default {
                             <label>Description</label>
                             <Textarea v-model="description" autoResize rows="5" cols="30" />
                         </div>
+                    </div>
+                    <div :class="styles.studentDashboard_modelContent_button_container">
+                        <button
+                          :class="styles.studentDashboard_modelContent_button_container_cancel_button"
+                        >Cancel</button>
+                        <button
+                          :class="styles.studentDashboard_modelContent_button_container_submit_button"
+                        >Submit</button>
                     </div>
                 </div>
             </Dialog>

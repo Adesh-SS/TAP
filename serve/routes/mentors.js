@@ -6,6 +6,7 @@ import express from 'express';
 
 import { Mentor, validateMentor } from '../models/mentors/addMentors.js';
 import { Admin } from '../models/for_login/admin.js';
+import { Student } from '../models/students/addStudents.js';
 
 const router = express.Router();
 
@@ -56,15 +57,37 @@ router.get('/getMentors', async (req, res) => {
 router.delete('/deleteMentor/:mentorId', async(req, res) => {
     try {
         const mentorId = req.params.mentorId;
-        const mentor = await Mentor.findOneAndDelete({ mentorId: mentorId });
+        const mentor = await Mentor.findOne({ mentorId: mentorId });
         if (!mentor) return res.status(404).send('Mentor not found');
 
-        await Admin.updateMany(
-            {},
-            { $pull: { mentors: mentor._id } }
-        );
+        const admin = await Admin.findOne();
+        if (!admin) return res.status(404).send('Admin not found');
 
-        res.status(200).send('Mentor Deleted');
+        const index = admin.mentors.indexOf(mentor._id);
+        if (index > -1) admin.mentors.splice(index, 1);
+        await admin.save();
+
+        const students = await Student.find({ _id: { $in: mentor.students } });
+        Student.deleteMany({ _id: { $in: mentor.students } }, (err) => {
+            if (err) return res.status(500).send('Internal Server Error');
+        });
+
+        await Mentor.deleteOne({ mentorId: mentorId });
+
+        res.status(200).send('Mentor Deletion Successful');
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/getMentees/:mentorId', async (req, res) => {
+    try {
+        const mentor = await Mentor.findOne({ mentorId: req.params.mentorId }, 'students');
+        if (!mentor) return res.status(404).send('Mentor not found');
+
+        const students = await Student.find({ _id: { $in: mentor.students } }, 'studentId studentName');
+        res.status(200).send(students);
     } catch (error) {
         console.log(error);
         res.status(500).send('Internal Server Error');

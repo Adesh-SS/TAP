@@ -30,6 +30,11 @@ interface Mentor {
     mentorEmail: string;
 }
 
+interface Mentees {
+    studentId: string;
+    studentName: string;
+}
+
 interface ParseResult<T> {
   data: T[];
   errors: any[];
@@ -68,6 +73,8 @@ export default{
             mentorEmail: ''
         });
         const mentorFileName = ref<string>('Browse for file');
+        const showMenteesModal = ref<boolean>(false);
+        const mentees  = ref<Mentees[]>([]);
 
 
         const chartData = ref<any>();
@@ -334,6 +341,29 @@ export default{
             }
         }
 
+        const handleMenteesModal = (mentorId: string) => {
+            showMenteesModal.value = !showMenteesModal.value;
+            fetchMentees(mentorId);
+        }
+
+        const fetchMentees = async(mentorId: string) => {
+            try {
+                const response = await axios.get(`http://localhost:5000/mentor/getMentees/${mentorId}`);
+                const menteesData = response.data.map((mentee: Mentees) => ({
+                    studentId: mentee.studentId,
+                    studentName: mentee.studentName
+                }));
+
+                mentees.value.push(...menteesData);
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response) {
+                    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data, life: 2000 });
+                } else {
+                    toast.add({ severity: 'error', summary: 'Error', detail: 'An unexpected error occurred', life: 2000 });
+                }
+            }
+        }
+
         onMounted(() => {
             chartData.value = setChartData();
             chartOptions.value = setChartOptions();
@@ -369,7 +399,10 @@ export default{
         downloadMentorCSV,
         handleMentorCSVUpload,
         mentorFileName,
-        handleDeleteMentor
+        handleDeleteMentor,
+        showMenteesModal,
+        handleMenteesModal,
+        mentees
        } 
     }
 }
@@ -735,7 +768,7 @@ export default{
                                                 <h1>{{ mentor.mentorName }}</h1>
                                             </div>
                                             <div :class="styles.adminPage_mentor_display_container_students">
-                                                <button>Students</button>
+                                                <button @click="handleMenteesModal(mentor.mentorId)">Students</button>
                                             </div>
                                             <div :class="styles.adminPage_mentor_display_container_delete">
                                                 <i 
@@ -743,6 +776,41 @@ export default{
                                                     @click="handleDeleteMentor(mentor.mentorId)"
                                                 ></i>
                                             </div>
+
+                                            <Dialog
+                                                v-model="showMenteesModal"
+                                                header = "Mentees"
+                                                :visible="showMenteesModal"
+                                                @update:visible="showMenteesModal = $event"
+                                                :modal="true"
+                                                :closable="true"
+                                                style="width: 65vw; height: 80vh"
+                                            >
+                                                <div :class="styles.adminPage_mentor_inside_students_modal">
+                                                    <div :class="styles.adminPage_mentor_inside_students_search_container">Search Filter goes here</div>
+                                                    <div 
+                                                        :class="styles.adminPage_mentor_inside_student_details_container"
+                                                        v-for="(mentee, index) in mentees"
+                                                        :key="index"
+                                                    >
+                                                        <div :class="styles.adminPage_mentor_inside_student_details_index">
+                                                            <h1>{{ index + 1 }}</h1>
+                                                        </div>
+                                                        <div :class="styles.adminPage_mentor_inside_student_details_id">
+                                                            <h1>{{ mentee.studentId }}</h1>
+                                                        </div>
+                                                        <div :class="styles.adminPage_mentor_inside_student_details_name">
+                                                            <h1>{{ mentee.studentName }}</h1>
+                                                        </div>
+                                                        <div :class="styles.adminPage_mentor_inside_student_details_edit">
+                                                            <i class="pi pi-pencil"></i>
+                                                        </div>
+                                                        <div :class="styles.adminPage_mentor_inside_student_details_delete">
+                                                            <i class="pi pi-trash"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </Dialog>
                                         </div>
                                     </div>
                                 </div>
