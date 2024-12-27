@@ -25,7 +25,23 @@ const mentorSchema = new mongoose.Schema({
     students: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student'
-    }]
+    }],
+    ondutyApplications: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'OndutyApplication'
+    }],
+    totalApproved: {
+        type: Number,
+        default: 0
+    },
+    totalRejected: {
+        type: Number,
+        default: 0
+    },
+    role : {
+        type: String,
+        default: 'mentor'
+    }
 });
 
 const Mentor = mongoose.model("mentors", mentorSchema);

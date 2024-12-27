@@ -3,6 +3,7 @@
 
 import { ref, onMounted } from "vue";
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 // Components
 
@@ -69,6 +70,28 @@ const groupedTypes = ref<Category[]>([
 const buttondisplay = ref<Date | null>(null);
 const endDateDisplay = ref<Date | null>(null);
 const description = ref<string>('');
+
+const value = ref("");
+const items = ref([]);
+
+const searchStudent = async () => {
+  const query = value.value;
+  if (query) {
+    try {
+      const response = await axios.get(`http://localhost:5000/onduty/fetchStudent`, {
+        params: {
+          studentId: query
+        }
+      });
+      items.value = response.data;
+    } catch (error) {
+      console.error('Error fetching students:', error);
+      items.value = [];
+    }
+  } else {
+    items.value = [];
+  }
+};
 
 const addOnduty = () => {
   Swal.fire({
@@ -139,7 +162,10 @@ export default {
         buttondisplay,
         endDateDisplay,
         description,
-        handleLogout
+        handleLogout,
+        value,
+        items,
+        searchStudent
     };
   }
 };
@@ -210,7 +236,7 @@ export default {
                     <div :class="styles.studentDashboard_modalContent_container">
                         <div :class="styles.studentDashboard_modalContent_container_student_input">
                             <label>Student:</label>
-                            <input type="text" placeholder="Student(Roll Number)(Mail)" />
+                            <AutoComplete v-model="value" dropdown :suggestions="items" @complete="searchStudent" />
                         </div>
                         <div :class="styles.studentDashboard_modalContent_container_staff_input">
                             <label>Mentor ID</label>

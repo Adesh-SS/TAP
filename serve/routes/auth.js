@@ -30,7 +30,6 @@ router.post('/login', async (req, res) => {
 
             const token = student.generateAuthToken();
             const role = student.role;
-            console.log(role);
             const falseToken = crypto.randomBytes(16).toString('hex');
 
             res.status(200).json({token: token, role: role, false: falseToken});
