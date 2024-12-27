@@ -74,6 +74,9 @@ const description = ref<string>('');
 const value = ref("");
 const items = ref([]);
 
+const mentorValue = ref("");
+const mentorItems = ref([]);
+
 const searchStudent = async () => {
   const query = value.value;
   if (query) {
@@ -90,6 +93,25 @@ const searchStudent = async () => {
     }
   } else {
     items.value = [];
+  }
+};
+
+const searchMentor = async () => {
+  const query = mentorValue.value;
+  if (query) {
+    try {
+      const response = await axios.get(`http://localhost:5000/onduty/fetchMentor`, {
+        params: {
+          mentorId: query
+        }
+      });
+      mentorItems.value = response.data;
+    } catch (error) {
+      console.error('Error fetching mentors:', error);
+      mentorItems.value = [];
+    }
+  } else {
+    mentorItems.value = [];
   }
 };
 
@@ -165,7 +187,10 @@ export default {
         handleLogout,
         value,
         items,
-        searchStudent
+        searchStudent,
+        mentorValue,
+        mentorItems,
+        searchMentor
     };
   }
 };
@@ -240,7 +265,7 @@ export default {
                         </div>
                         <div :class="styles.studentDashboard_modalContent_container_staff_input">
                             <label>Mentor ID</label>
-                            <input type="text" placeholder="Mentor ID" />
+                            <AutoComplete v-model="mentorValue" dropdown :suggestions="mentorItems" @complete="searchMentor" />
                         </div>
                         <div :class="styles.studentDashboard_modalContent_container_staff_input">
                             <label>Special Lab</label>

@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 
 import { Onduty, validateOnduty } from '../models/onduties/addOnduty.js';
 import { Student } from '../models/students/addStudents.js';
+import { Mentor } from '../models/mentors/addMentors.js';
 
 //Router
 
@@ -49,6 +50,22 @@ router.get('/fetchStudent', async (req, res) => {
     ));
 
     res.send(studentDetails);
+});
+
+router.get('/fetchMentor', async (req, res) => {
+    const mentorId = req.query.mentorId;
+    if (!mentorId) return res.status(400).send('Mentor ID is required');
+
+    const regex = new RegExp('^' + mentorId, 'i');
+    const mentors = await Mentor.find({ mentorId: regex });
+
+    if (mentors.length === 0) return res.status(400).send('No mentors found');
+
+    const mentorDetails = mentors.map(mentor => (
+        `${mentor.mentorId}(${mentor.mentorName})`
+    ));
+
+    res.send(mentorDetails);
 });
 
 export default router;
